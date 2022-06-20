@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> header }}
+
+<body>
+    {{> navbar  }}
+    <div class="container">
+        <div class="text">Login Usuarios Fixmort</div>
+        {{#if msg}}
+        <p class="{{msg_type}}">{{msg}}</p>
+        {{/if}}
+        <form action="/auth/login" method="POST">
+            <div class="data">
+                <label for="email">Usuario</label>
+                <input type="text" name="email" id="email">
+            </div>
+            <div class="data">
+                <label for="password">Contraseña</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <div class="btn">
+                <button type="submit">Ingresar</button>
+            </div>
+            <div class="singup-link">Not a member?<a href="/register"> SignUp</a></div>
+        </form>
+    </div>
+</body>
+
+</html>
