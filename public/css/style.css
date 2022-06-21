@@ -133,6 +133,37 @@ nav .logo {
     color: #5119E4;
 }
 
+nav .logo-detalle {
+    height: 65px;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    background: var(--fondo-gris);
+}
+
+nav .logo-detalle i {
+    background-image: url(../images/logotipo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    height: 45px;
+    min-width: 62px;
+    text-align: center;
+    line-height: 50px;
+}
+
+nav .logo-detalle .logo-detalle__nombre {
+    font-size: 22px;
+    color: var(--blanco);
+    font-weight: 600;
+    transition: 0.5s ease;
+    -webkit-transition: 0.5s ease;
+    -moz-transition: 0.5s ease;
+    -ms-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
+    transition-delay: 0.1s;
+}
+
 nav .menu a {
     margin: 10px 10px;
     text-decoration: none;

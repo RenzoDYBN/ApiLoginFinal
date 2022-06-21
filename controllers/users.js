@@ -14,14 +14,14 @@ const db = mysql.createConnection({
 
 exports.login = async(req, res) => {
     try {
-        const { email, password } = req.body;
-        if (!email || !password) {
+        const { nombre_usuario, password } = req.body;
+        if (!nombre_usuario || !password) {
             return res.status(400).render("login", {
                 msg: "Ingresa Tu Usuario y Contraseña",
                 msg_type: "error",
             });
         }
-        db.query("select * from users where email=?", [email],
+        db.query("select * from usuarios where nombre_usuario=?", [nombre_usuario],
             async(error, result) => {
                 console.log(result);
                 if (result.length <= 0) {
@@ -30,14 +30,14 @@ exports.login = async(req, res) => {
                         msg_type: "error",
                     });
                 } else {
-                    if (!(await bcrypt.compare(password, result[0].PASS))) {
+                    if (!(await bcrypt.compare(password, result[0].pass))) {
                         return res.status(401).render("login", {
                             msg: "Correo o Contraseña incorrecta",
                             msg_type: "error",
                         });
                     } else {
-                        const id = result[0].ID;
-                        const token = jwt.sign({ id: id }, process.env.JWT_SECRET, {
+                        const usuario = result[0].usuario;
+                        const token = jwt.sign({ usuario: usuario }, process.env.JWT_SECRET, {
                             expiresIn: process.env.JWT_EXPIRES_IN,
                         });
                         console.log("The token is " + token);
@@ -67,15 +67,21 @@ exports.register = (req, res) => {
     // console.log(name);
     // console.log(email);
     // console.log(cpassword, "jaja");
-    const { name, email, password, cpassword } = req.body;
-    db.query('select email from users where email=?', [email],
+    const { dni_persona, codigo_rol, nombre_usuario, password, cpassword } = req.body;
+    db.query('select nombre_usuario from usuarios where nombre_usuario=?', [nombre_usuario],
         async(error, result) => {
             if (error) {
                 confirm.log(error);
             }
+            if (dni_persona.length > 0) {
+                return res.render("register", {
+                    msg: 'El dni ya esta registrado , intenta con otro dni',
+                    msg_type: "error"
+                });
+            }
             if (result.length > 0) {
                 return res.render("register", {
-                    msg: 'El correo ya esta registrado , intenta con otro Email',
+                    msg: 'El usuario ya esta registrado , intenta con otro Usuario',
                     msg_type: "error"
                 });
             } else if (password !== cpassword) {
@@ -83,8 +89,9 @@ exports.register = (req, res) => {
             }
             let hashedPassord = await bcrypt.hash(password, 8);
             console.log(hashedPassord);
+            // let codigo_rolN = Number(document.getElementById('codigo_rol').value);
 
-            db.query("insert into users set ?", { name: name, email: email, pass: hashedPassord },
+            db.query("insert into usuarios set ?", { dni_persona: dni_persona, codigo_rol: Number(codigo_rol), nombre_usuario: nombre_usuario, pass: hashedPassord, estado_usuario: "Activo" },
                 (error, result) => {
                     if (error) {
                         console.log(error);
@@ -105,7 +112,7 @@ exports.isLoggedIn = async(req, res, next) => {
                 req.cookies.joes,
                 process.env.JWT_SECRET
             );
-            db.query("select * from users where id=?", [decode.id], (err, results) => {
+            db.query("select * from usuarios where usuario=?", [decode.usuario], (err, results) => {
                 if (!results) {
                     return next();
                 }

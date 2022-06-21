@@ -1,16 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{{> header }}
+{{> headerregu }}
 
 <body>
     {{> navbar  }}
-    <div class="container">
-        <div class="text">Registro Usuarios</div>
-        {{#if msg}}
-        <p class="{{msg_type}}">{{msg}}</p>
-        {{/if}}
-        <form action="/auth/register" method="post">
+    <div class="form-content">
+        <div class="l-form">
+            <form action="/auth/register" method="POST" id="formulario" class="formulario">
+                <h1 class="formulario__titulo">Registro de Usuario</h1>
+                {{#if msg}}
+                <p class="{{msg_type}}">{{msg}}</p>
+                {{/if}}
+                <div class="flexbox">
+                    <div class="formulario__div">
+                        <input type="number" name="dni_persona" id="dni_persona" class="formulario__input" placeholder=" ">
+                        <label for="dni_persona" class="formulario__label">D.N.I.</label>
+                    </div>
+                    {{!-- deshabilitado un toque --}}
+                    {{!-- <div style="width:48.5%; text-align:center;">
+                        <button type="submit" class="formulario__boton-single slide"><span>Buscar Persona</span></button>
+                    </div> --}}
+                    <div class="formulario__div">
+                        <input type="text" name="nombre_usuario" id="nombre_usuario" class="formulario__input" placeholder=" ">
+                        <label for="nombre_usuario" class="formulario__label">Nombre de usuario</label>
+                    </div>
+                    {{!-- <div class="formulario__div">
+                        <input type="text" name="apePaterno" id="apePaterno" class="formulario__input" placeholder=" ">
+                        <label for="apePaterno" class="formulario__label">Apellido Paterno</label>
+                    </div>
+                    <div class="formulario__div">
+                        <input type="text" name="apeMaterno" id="apeMaterno" class="formulario__input" placeholder=" ">
+                        <label for="apeMaterno" class="formulario__label">Apellido Materno</label>
+                    </div> --}}
+                    {{!-- <div class="formulario__div"> --}}
+                        <!-- <select name="area" id="area" class="formulario__select-input">
+                            <option value=""></option>
+                            <option value="produccion">Produccion</option>
+                            <option value="rrhh">RRHH</option>
+                            <option value="ventas">Ventas</option>
+                            <option value="almacen">Almacen</option>
+                            <option value="gerencia">Gerencia</option>
+                            <option value="contabilidad">Contabilidad</option>
+                            <option value="administrador">Administrador</option>
+                        </select>
+                        <label for="area" class="formulario__select-label">Rol del usuario</label> -->
+                    {{!-- </div> --}}
+                    {{!-- deshabilitado un toque --}}
+                    {{!-- <div style="width:48.5%; text-align:center;">
+                        <button type="submit" class="formulario__boton-single slide"><span>Generar Usuario</span></button>
+                    </div> --}} 
+                    <div class="formulario__div">
+                        <input type="password" name="password" id="password" class="formulario__input" placeholder=" ">
+                        <label for="password" class="formulario__label">Contraseña</label>
+                    </div>
+                    <div class="formulario__div">
+                        <input type="password" name="cpassword" id="cpassword" class="formulario__input" placeholder=" ">
+                        <label for="cpassword" class="formulario__label">Confirmar Contraseña</label>
+                    </div>
+                    <div class="formulario__div">
+                        <select name="codigo_rol" id="codigo_rol" class="formulario__select-input">
+                            <option value="">Rol del Usuario</option>
+                            <option value="1">Administrador</option>
+                            <option value="2">Produccion</option>
+                            <option value="3">RRHH</option>
+                            <option value="4">Ventas</option>
+                            <option value="5">Almacen</option>
+                            <option value="6">Gerencia</option>
+                            <option value="7">Contabilidad</option>
+                        </select>
+                        {{!-- <label for="" class="formulario__select-label">Rol del usuario</label> --}}
+                    </div>
+                </div>
+                <div class="formulario__div-botones" style="text-align:center;">
+                    <button type="submit" class="formulario__boton slide">Registrar Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="jquery.min.js"></script>
+    <script>
+        function stateCheck($formularioSelectInput) {
+            if ($formularioSelectInput.val().length > 0) {
+                $formularioSelectInput.addClass('valid');
+            } else {
+                $formularioSelectInput.removeClass('valid');
+            }
+        }
+
+        {{!-- $(function() {
+            
+            $('.formulario__select-input').on('focusout', function() {
+                stateCheck($(this));
+            });
+
+        }); --}}
+    </script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {{!-- <form action="/auth/register" method="post">
             <div class="data">
                 <label for="name">Full Name</label>
                 <input type="text" name="name" id="name">
@@ -32,7 +143,4 @@
             </div>
             <div class="singup-link">¿Ya existe un usuario?<a href="/"> Inicia Sesión</a></div>
         </form>
-    </div>
-</body>
-
-</html>
+    </div> --}}
