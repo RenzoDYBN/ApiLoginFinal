@@ -27,10 +27,10 @@
 }
 
 .form-content {
+    background-image: url(../images/fixmort-5.jpg);
     padding-top: 15px;
     font-family: var(--fuente-principal);
     font-size: var(--tamaño-fuente-normal);
-    background-image: url(../images/fixmort-5.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -54,7 +54,7 @@ input[type=number]::-webkit-outer-spin-button {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 2.5rem auto;
+    margin: 11.4rem auto;
 }
 
 .formulario {

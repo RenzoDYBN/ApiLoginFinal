@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Usuario</title>
+    <script src="https://kit.fontawesome.com/ec9265bfa6.js" crossorigin="anonymous"></script>
+    <link href="../css/buscar-usuario.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/homestyle.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Buscar Usuario</title>
+
+</head>
+
+<body>
+   {{> navhomebar }}
+    <div class="form-content">
+        <div class="l-form">
+            <form action="/auth/searchuser" method="POST" id="formulario" class="formulario">
+                <h1 class="formulario__titulo">Búsqueda de Usuario</h1>
+                {{#if msg}}
+                <p class="{{msg_type}}">{{msg}}</p>
+                {{/if}}
+                <div class="flexbox">
+                    <div class="formulario__div">
+                        <select name="tip_busq" id="tip_busq" class="formulario__select-input" onchange="oppearInput()">
+                            <option value=""></option>
+                            <option value="dni">D.N.I.</option>
+                            <option value="nom_y_ape">Nombre y Apellidos</option>
+                        </select>
+                        <label for="tip_busq" class="formulario__select-label">Buscar por:</label>
+                    </div>
+                    <div class="formulario__div dni">
+                        <input type="number" name="dni" id="dni" class="formulario__input" placeholder=" ">
+                        <label for="dni" class="formulario__label">D.N.I.</label>
+                    </div>
+                    <div class="formulario__div nombre" style="display:none">
+                        <input type="text" name="nombre" id="nombre" class="formulario__input" placeholder=" ">
+                        <label for="nombre" class="formulario__label">Nombres</label>
+                    </div>
+                    <div class="formulario__div apePate" style="display:none">
+                        <input type="text" name="apePaterno" id="apePaterno" class="formulario__input" placeholder=" ">
+                        <label for="apePaterno" class="formulario__label">Apellido Paterno</label>
+                    </div>
+                    <div class="formulario__div apeMate" style="display:none">
+                        <input type="text" name="apeMaterno" id="apeMaterno" class="formulario__input" placeholder=" ">
+                        <label for="apeMaterno" class="formulario__label">Apellido Materno</label>
+                    </div>
+                    <div class="formulario__div">
+                        <div style="text-align:center;">
+                            <button type="submit" class="formulario__boton-single slide"><span>Buscar Persona</span></button>
+                        </div>
+                        <div class="formulario__div nombre">
+                            <input type="text" name="nombre" id="nombre" class="formulario__input" placeholder=" ">
+                            <label for="nombre" class="formulario__label">Nombres</label>
+                        </div>
+                        <div class="formulario__div apePate">
+                            <input type="text" name="apePaterno" id="apePaterno" class="formulario__input" placeholder=" ">
+                            <label for="apePaterno" class="formulario__label">Apellido Paterno</label>
+                        </div>
+                        <div class="formulario__div apeMate">
+                            <input type="text" name="apeMaterno" id="apeMaterno" class="formulario__input" placeholder=" ">
+                            <label for="apeMaterno" class="formulario__label">Apellido Materno</label>
+                        </div>
+                    </div>
+                    <div class="tabla-contenedor">
+                        <!-- <div class="table-responsive">  -->
+                        <table id="tabla" class="tabla">
+                            <thead>
+                                <tr>
+                                    <th>DNI</th>
+                                    <th>Nombres</th>
+                                    <th>Ape. Paterno</th>
+                                    <th>Ape. Materno</th>
+                                    <th>Usuario</th>
+                                    <th>Contraseña</th>
+                                    <th>Rol</th>
+                                    <th>Estado</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>70472530</td>
+                                    <td>Renzo</td>
+                                    <td>Bustamante</td>
+                                    <td>Nestares</td>
+                                    <td>rbustamanten</td>
+                                    <td>lkj25ew</td>
+                                    <td>Administrador</td>
+                                    <td><span class="available"></span></td>
+                                    <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>72186058</td>
+                                    <td>Crhistian</td>
+                                    <td>Ortiz</td>
+                                    <td>Huiza</td>
+                                    <td>cortizh</td>
+                                    <td>$moken96</td>
+                                    <td>Administrador</td>
+                                    <td><span class="available"></span></td>
+                                    <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>45798177</td>
+                                    <td>Josue</td>
+                                    <td>Robles</td>
+                                    <td>Bustamante</td>
+                                    <td>jroblesb</td>
+                                    <td>01po258</td>
+                                    <td>Administrador</td>
+                                    <td><span class="available"></span></td>
+                                    <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>45940356</td>
+                                    <td>Oscar</td>
+                                    <td>Gonzales</td>
+                                    <td>Suarez</td>
+                                    <td>ogonzaless</td>
+                                    <td>852wer74</td>
+                                    <td>Administrador</td>
+                                    <td><span class="available"></span></td>
+                                    <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>76816420</td>
+                                    <td>Giuliana</td>
+                                    <td>Huaman</td>
+                                    <td>Nacarino</td>
+                                    <td>ghuamann</td>
+                                    <td>21321sdas</td>
+                                    <td>RR.HH.</td>
+                                    <td><span class="available"></span></td>
+                                    <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>72132122</td>
+                                    <td>Manuel</td>
+                                    <td>Huiza</td>
+                                    <td>Jave</td>
+                                    <td>mhuizaj</td>
+                                    <td>369bgt14</td>
+                                    <td>Producción</td>
+                                    <td><span class="away"></span></td>
+                                    <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>76598141</td>
+                                    <td>Victor</td>
+                                    <td>Anibal</td>
+                                    <td>Campos</td>
+                                    <td>vanibalc</td>
+                                    <td>98ytr546</td>
+                                    <td>Producción</td>
+                                    <td><span class="available"></span></td>
+                                    <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>45685312</td>
+                                    <td>Adriana</td>
+                                    <td>Sanchez</td>
+                                    <td>Huaman</td>
+                                    <td>asanchezh</td>
+                                    <td>789qwe12</td>
+                                    <td>Producción</td>
+                                    <td><span class="available"></span></td>
+                                    <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>08531371</td>
+                                    <td>Marco</td>
+                                    <td>Escalante</td>
+                                    <td>Nimas</td>
+                                    <td>mescalanten</td>
+                                    <td>321dsa65</td>
+                                    <td>Contabilidad</td>
+                                    <td><span class="offline"></span></td>
+                                    <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>08479787</td>
+                                    <td>Martina</td>
+                                    <td>Sigil</td>
+                                    <td>Chavez</td>
+                                    <td>msigilch</td>
+                                    <td>123asd45</td>
+                                    <td>Administrador</td>
+                                    <td><span class="away"></span></td>
+                                    <td><i class="fa-regular fa-pen-to-square"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="pie-tabla">
+                            <div class="lista-elementos">
+                                Ver
+                                <select name="n-entradas" id="n-entradas" class="n-entradas"> 
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="15">15</option>
+                            </select> filas
+                            </div>
+                            <div class="paginas">
+                                <ul>
+                                    <li><span class="active">1</span></li>
+                                    <li><button>2</button></li>
+                                    <li><button>3</button></li>
+                                    <li><button>4</button></li>
+                                    <li><span>...</span></li>
+                                    <li><button>9</button></li>
+                                    <li><button>10</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                    <p class="warnings" id="warnings"></p>
+                    <div class="formulario__div-botones" style="text-align:center;">
+                        <input type="button" class="formulario__boton slide" value="Registrar" onclick="clickButton()">
+                    </div>
+            </form>
+            </div>
+        </div>
+</body>
+<script src="jquery.min.js"></script>
+    <script>
+        function stateCheck($formularioSelectInput) {
+            if ($formularioSelectInput.val().length > 0) {
+                $formularioSelectInput.addClass('valid');
+            } else {
+                $formularioSelectInput.removeClass('valid');
+            }
+        }
+
+        $(function() {
+            
+            $('.formulario__select-input').on('focusout', function() {
+                stateCheck($(this));
+            });
+
+        });
+    </script>
+<script>
+    const dt = new DataTable('#tabla', [{
+        id: 'bEdit',
+        text: 'Editar',
+        icon: 'edit',
+        action: function() {
+            //codigo de tu callback
+        }
+    }]);
+    dt.parse();
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

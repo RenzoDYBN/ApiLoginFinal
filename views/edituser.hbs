@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{{> headerregu }}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Login Fixmort</title>
+    {{!-- <link rel="stylesheet" href="../css/style.css">  --}}
+    <link rel="stylesheet" href="../css/registrar-usuario.css">
+    <link rel="stylesheet" href="../css/homestyle.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/ec9265bfa6.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+</head>
 
 <body>
     {{> navhomebar  }}
     <div class="form-content">
         <div class="l-form">
-            <form action="/auth/register" method="POST" id="formulario" class="formulario">
-                <h1 class="formulario__titulo">Registro de Usuario</h1>
+            <form action="/auth/edituser" method="POST" id="formulario" class="formulario">
+                <h1 class="formulario__titulo">Editar Usuario</h1>
                 {{#if msg}}
                 <p class="{{msg_type}}">{{msg}}</p>
                 {{/if}}
@@ -17,10 +28,6 @@
                         <input type="number" name="dni_persona" id="dni_persona" class="formulario__input" placeholder=" ">
                         <label for="dni_persona" class="formulario__label">D.N.I.</label>
                     </div>
-                    {{!-- deshabilitado un toque --}}
-                    {{!-- <div style="width:48.5%; text-align:center;">
-                        <button type="submit" class="formulario__boton-single slide"><span>Buscar Persona</span></button>
-                    </div> --}}
                     <div class="formulario__div">
                         <input type="text" name="nombre_usuario" id="nombre_usuario" class="formulario__input" placeholder=" ">
                         <label for="nombre_usuario" class="formulario__label">Nombre de usuario</label>
@@ -33,30 +40,9 @@
                         <input type="text" name="apeMaterno" id="apeMaterno" class="formulario__input" placeholder=" ">
                         <label for="apeMaterno" class="formulario__label">Apellido Materno</label>
                     </div> --}}
-                    {{!-- <div class="formulario__div"> --}}
-                        <!-- <select name="area" id="area" class="formulario__select-input">
-                            <option value=""></option>
-                            <option value="produccion">Produccion</option>
-                            <option value="rrhh">RRHH</option>
-                            <option value="ventas">Ventas</option>
-                            <option value="almacen">Almacen</option>
-                            <option value="gerencia">Gerencia</option>
-                            <option value="contabilidad">Contabilidad</option>
-                            <option value="administrador">Administrador</option>
-                        </select>
-                        <label for="area" class="formulario__select-label">Rol del usuario</label> -->
-                    {{!-- </div> --}}
-                    {{!-- deshabilitado un toque --}}
-                    {{!-- <div style="width:48.5%; text-align:center;">
-                        <button type="submit" class="formulario__boton-single slide"><span>Generar Usuario</span></button>
-                    </div> --}} 
                     <div class="formulario__div">
                         <input type="password" name="password" id="password" class="formulario__input" placeholder=" ">
                         <label for="password" class="formulario__label">Contraseña</label>
-                    </div>
-                    <div class="formulario__div">
-                        <input type="password" name="cpassword" id="cpassword" class="formulario__input" placeholder=" ">
-                        <label for="cpassword" class="formulario__label">Confirmar Contraseña</label>
                     </div>
                     <div class="formulario__div">
                         <select name="codigo_rol" id="codigo_rol" class="formulario__select-input">
@@ -71,32 +57,41 @@
                         </select>
                         <label for="codigo_rol" class="formulario__select-label">Rol del usuario</label>
                     </div>
+                    <div class="formulario__div">
+                        <select name="estado_usuario" id="estado_usuario" class="formulario__select-input">
+                            <option value=""></option>
+                            <option value="Activo">Activo</option>
+                            <option value="Desactivado">Desactivado</option>
+                        </select>
+                        <label for="estado_usuario" class="formulario__select-label">Estado del usuario</label>
+                    </div>
                 </div>
                 <div class="formulario__div-botones" style="text-align:center;">
-                    <button type="submit" class="formulario__boton slide">Registrar Usuario</button>
+                    <input type="submit" class="formulario__boton slide" value="Guardar">
+                    <input type="submit" class="formulario__boton slide" value="Cancelar">
                 </div>
             </form>
         </div>
     </div>
 </body>
 <script src="jquery.min.js"></script>
-    <script>
-        function stateCheck($formularioSelectInput) {
-            if ($formularioSelectInput.val().length > 0) {
-                $formularioSelectInput.addClass('valid');
-            } else {
-                $formularioSelectInput.removeClass('valid');
-            }
+<script>
+    function stateCheck($formularioSelectInput) {
+        if ($formularioSelectInput.val().length > 0) {
+            $formularioSelectInput.addClass('valid');
+        } else {
+            $formularioSelectInput.removeClass('valid');
         }
+    }
 
-        $(function() {
-            
-            $('.formulario__select-input').on('focusout', function() {
-                stateCheck($(this));
-            });
+    $(function() {
 
+        $('.formulario__select-input').on('focusout', function() {
+            stateCheck($(this));
         });
-    </script>
+
+    });
+</script>
 </html>
 
 
