@@ -24,7 +24,7 @@ function Agregar_piezas() {
 
 function reg_usuario() {
     $(document).ready(function() {
-        $('#content').load('./pages/registrar-usuario.html');
+        $('#content').load('/auth/register');
 
     });
 }
