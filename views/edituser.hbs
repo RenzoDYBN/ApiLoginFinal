@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Login Fixmort</title>
+    {{!-- <link rel="stylesheet" href="../css/style.css">  --}}
+    <link rel="stylesheet" href="../css/registrar-usuario.css">
+    <link rel="stylesheet" href="../css/homestyle.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/ec9265bfa6.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    {{> navhomebar  }}
+    <div class="form-content">
+        <div class="l-form">
+            <form action="/auth/edituser" method="POST" id="formulario" class="formulario">
+                <h1 class="formulario__titulo">Editar Usuario</h1>
+                {{#if msg}}
+                <p class="{{msg_type}}">{{msg}}</p>
+                {{/if}}
+                <div class="flexbox">
+                    <div class="formulario__div">
+                        <input type="number" name="dni_persona" id="dni_persona" class="formulario__input" placeholder=" ">
+                        <label for="dni_persona" class="formulario__label">D.N.I.</label>
+                    </div>
+                    <div class="formulario__div">
+                        <input type="text" name="nombre_usuario" id="nombre_usuario" class="formulario__input" placeholder=" ">
+                        <label for="nombre_usuario" class="formulario__label">Nombre de usuario</label>
+                    </div>
+                    {{!-- <div class="formulario__div">
+                        <input type="text" name="apePaterno" id="apePaterno" class="formulario__input" placeholder=" ">
+                        <label for="apePaterno" class="formulario__label">Apellido Paterno</label>
+                    </div>
+                    <div class="formulario__div">
+                        <input type="text" name="apeMaterno" id="apeMaterno" class="formulario__input" placeholder=" ">
+                        <label for="apeMaterno" class="formulario__label">Apellido Materno</label>
+                    </div> --}}
+                    <div class="formulario__div">
+                        <input type="password" name="password" id="password" class="formulario__input" placeholder=" ">
+                        <label for="password" class="formulario__label">Contraseña</label>
+                    </div>
+                    <div class="formulario__div">
+                        <select name="codigo_rol" id="codigo_rol" class="formulario__select-input">
+                            <option value=""></option>
+                            <option value="1">Administrador</option>
+                            <option value="2">Produccion</option>
+                            <option value="3">RRHH</option>
+                            <option value="4">Ventas</option>
+                            <option value="5">Almacen</option>
+                            <option value="6">Gerencia</option>
+                            <option value="7">Contabilidad</option>
+                        </select>
+                        <label for="codigo_rol" class="formulario__select-label">Rol del usuario</label>
+                    </div>
+                    <div class="formulario__div">
+                        <select name="estado_usuario" id="estado_usuario" class="formulario__select-input">
+                            <option value=""></option>
+                            <option value="Activo">Activo</option>
+                            <option value="Desactivado">Desactivado</option>
+                        </select>
+                        <label for="estado_usuario" class="formulario__select-label">Estado del usuario</label>
+                    </div>
+                </div>
+                <div class="formulario__div-botones" style="text-align:center;">
+                    <input type="submit" class="formulario__boton slide" value="Guardar">
+                    <input type="submit" class="formulario__boton slide" value="Cancelar">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="jquery.min.js"></script>
+<script>
+    function stateCheck($formularioSelectInput) {
+        if ($formularioSelectInput.val().length > 0) {
+            $formularioSelectInput.addClass('valid');
+        } else {
+            $formularioSelectInput.removeClass('valid');
+        }
+    }
+
+    $(function() {
+
+        $('.formulario__select-input').on('focusout', function() {
+            stateCheck($(this));
+        });
+
+    });
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

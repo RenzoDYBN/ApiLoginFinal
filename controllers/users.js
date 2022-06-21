@@ -97,6 +97,73 @@ exports.register = (req, res) => {
         });
 };
 
+exports.edituser = (req, res) => {
+    console.log(req.body);
+    const { dni_persona, codigo_rol, nombre_usuario, password } = req.body;
+    db.query('select nombre_usuario from usuarios where nombre_usuario=?', [nombre_usuario],
+        async(error, result) => {
+            if (error) {
+                confirm.log(error);
+            }
+            if (result.length > 0) {
+                return res.render("register", {
+                    msg: 'El usuario ya esta registrado , intenta con otro Usuario',
+                    msg_type: "error"
+                });
+            } else if (password !== cpassword) {
+                return res.render("register", { msg: "Las contraseñas no coinciden", msg_type: "error" })
+            }
+            let hashedPassord = await bcrypt.hash(password, 8);
+            console.log(hashedPassord);
+            // let codigo_rolN = Number(document.getElementById('codigo_rol').value);
+
+            db.query("insert into usuarios set ?", { dni_persona: dni_persona, codigo_rol: Number(codigo_rol), nombre_usuario: nombre_usuario, pass: hashedPassord, estado_usuario: "Activo" },
+                (error, result) => {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log(result);
+                        return res.render("register", { msg: "Registro Exitoso", msg_type: "good" })
+                    }
+
+                })
+        });
+};
+
+exports.searchuser = (req, res) => {
+    console.log(req.body);
+    const { dni_persona, codigo_rol, nombre_usuario, password } = req.body;
+    db.query('select nombre_usuario from usuarios where nombre_usuario=?', [nombre_usuario],
+        async(error, result) => {
+            if (error) {
+                confirm.log(error);
+            }
+            if (result.length > 0) {
+                return res.render("register", {
+                    msg: 'El usuario ya esta registrado , intenta con otro Usuario',
+                    msg_type: "error"
+                });
+            } else if (password !== cpassword) {
+                return res.render("register", { msg: "Las contraseñas no coinciden", msg_type: "error" })
+            }
+            let hashedPassord = await bcrypt.hash(password, 8);
+            console.log(hashedPassord);
+            // let codigo_rolN = Number(document.getElementById('codigo_rol').value);
+
+            db.query("insert into usuarios set ?", { dni_persona: dni_persona, codigo_rol: Number(codigo_rol), nombre_usuario: nombre_usuario, pass: hashedPassord, estado_usuario: "Activo" },
+                (error, result) => {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log(result);
+                        return res.render("register", { msg: "Registro Exitoso", msg_type: "good" })
+                    }
+
+                })
+        });
+};
+
+
 exports.isLoggedIn = async(req, res, next) => {
     // console.log(req.cookies);
     if (req.cookies.fixmort) {
