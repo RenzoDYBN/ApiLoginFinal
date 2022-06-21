@@ -48,7 +48,7 @@ exports.login = async(req, res) => {
                             ),
                             httpOnly: true,
                         };
-                        res.cookie("joes", token, cookieOptions);
+                        res.cookie("fixmort", token, cookieOptions);
                         res.status(200).redirect("/home");
                     }
                 }
@@ -60,13 +60,6 @@ exports.login = async(req, res) => {
 }
 exports.register = (req, res) => {
     console.log(req.body);
-    // const name = req.body.name;
-    // const email = req.body.email;
-    // const password = req.body.password;
-    // const cpassword = req.body.cpassword;
-    // console.log(name);
-    // console.log(email);
-    // console.log(cpassword, "jaja");
     const { dni_persona, codigo_rol, nombre_usuario, password, cpassword } = req.body;
     db.query('select nombre_usuario from usuarios where nombre_usuario=?', [nombre_usuario],
         async(error, result) => {
@@ -106,10 +99,10 @@ exports.register = (req, res) => {
 
 exports.isLoggedIn = async(req, res, next) => {
     // console.log(req.cookies);
-    if (req.cookies.joes) {
+    if (req.cookies.fixmort) {
         try {
             const decode = await promisify(jwt.verify)(
-                req.cookies.joes,
+                req.cookies.fixmort,
                 process.env.JWT_SECRET
             );
             db.query("select * from usuarios where usuario=?", [decode.usuario], (err, results) => {
@@ -130,7 +123,7 @@ exports.isLoggedIn = async(req, res, next) => {
 };
 
 exports.logout = async(req, res) => {
-    res.cookie("joes", "logout", {
+    res.cookie("fixmort", "logout", {
         expires: new Date(Date.now() + 2 * 1000),
         httpOnly: true,
     });
