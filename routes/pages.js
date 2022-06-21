@@ -39,5 +39,4 @@ router.get("/home", userController.isLoggedIn, (req, res) => {
     }
 });
 
-
 module.exports = router;
