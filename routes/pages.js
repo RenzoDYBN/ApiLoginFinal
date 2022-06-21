@@ -7,9 +7,17 @@ router.get(["/", "/login"], (req, res) => {
     res.render("login");
 });
 
-router.get("/register", (req, res) => {
+router.get("/register", userController.isLoggedIn, (req, res) => {
     // res.send("<h1>Hello Renzo</h1>")
     res.render("register");
+
+});
+
+router.get("/home/register", userController.isLoggedIn, (req, res) => {
+    // res.send("<h1>Hello Renzo</h1>")
+    res.render("register", { user: req.user });
+    // res.redirect("/login");
+
 });
 
 router.get("/profile", userController.isLoggedIn, (req, res) => {
@@ -30,5 +38,6 @@ router.get("/home", userController.isLoggedIn, (req, res) => {
         res.redirect("/login");
     }
 });
+
 
 module.exports = router;

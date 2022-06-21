@@ -66,12 +66,12 @@ exports.register = (req, res) => {
             if (error) {
                 confirm.log(error);
             }
-            if (dni_persona.length > 0) {
-                return res.render("register", {
-                    msg: 'El dni ya esta registrado , intenta con otro dni',
-                    msg_type: "error"
-                });
-            }
+            // if (dni_persona.length > 0) {
+            //     return res.render("register", {
+            //         msg: 'El dni ya esta registrado , intenta con otro dni',
+            //         msg_type: "error"
+            //     });
+            // }
             if (result.length > 0) {
                 return res.render("register", {
                     msg: 'El usuario ya esta registrado , intenta con otro Usuario',
