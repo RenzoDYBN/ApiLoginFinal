@@ -1,13 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{{> header }}
+{{> headIndex }}
 
 <body>
-    {{> navbar  }}
-    <div class="container-fluid">
-        <h2>Home Page</h2>
-    </div>
+    <nav class="sidebar">
+        <div class="logo-detalle">
+            <i class="log-detalle__imagen" alt="logo Fixmort"></i>
+            <span class="logo-detalle__nombre">Fixmort S.A.C.</span>
+        </div>
+        <!-- <div style = "color:var(--blanco);padding:8px 20px; font-size:20px">MENÚ</div> -->
+        <div class="nav-enlaces">
+            <li>
+                <div class="icono-enlace">
+                    <a href="#">
+                        <i class="motor"></i>
+                        <span class="enlace__nombre">Gestión de motores</span>
+                    </a>
+                    <i class="fa-solid fa-angle-down flecha"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="enlace__nombre" href="#">Gestión de motores</a></li>
+                    <li><a href="#" onclick="buscar_ot()">Buscar Orden De Trabajo</a></li>
+                    <li><a href="#" onclick="detalle_ot()">Detalle de la OT</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icono-enlace">
+                    <a href="#">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                        <span class="enlace__nombre">Gestión de materiales</span>
+                    </a>
+                    <i class="fa-solid fa-angle-down flecha"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="enlace__nombre" href="#">Gestión de materiales</a></li>
+                    <li><a href="#" onclick="buscar_piezas()">Buscar piezas</a></li>
+                    <li><a href="#" onclick="mod_piezas_existentes()">Modificar piezas Existentes</a></li>
+                    <li><a href="#" onclick="Agregar_piezas()">Añadir piezas</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span class="enlace__nombre">Reportes</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="enlace__nombre" href="#">Reportes</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icono-enlace">
+                    <a href="#">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="enlace__nombre">Usuario</span>
+                    </a>
+                    <i class="fa-solid fa-angle-down flecha"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="enlace__nombre" href="#">Usuario</a></li>
+                    <li><a href="#" onclick="bus_usuario()">Buscar Usuario</a></li>
+                    <li><a href="#" onclick="reg_usuario()">Registrar Usuario</a></li>
+                    <li><a href="#" onclick="edit_usuario()">Editar Usuario</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icono-enlace">
+                    <a href="#">
+                        <i class="fa-solid fa-person"></i>
+                        <span class="enlace__nombre">Persona</span>
+                    </a>
+                    <i class="fa-solid fa-angle-down flecha"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="enlace__nombre" href="#">Persona</a></li>
+                    <li><a href="#" onclick="bus_persona()">Buscar Persona</a></li>
+                    <li><a href="#" onclick="reg_persona()">Registrar Persona</a></li>
+                    <li><a href="#" onclick="edit_persona()">Editar Persona</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icono-enlace">
+                    <a href="#">
+                        <i class="fa-solid fa-person"></i>
+                        <span class="enlace__nombre">Empresas</span>
+                    </a>
+                    <i class="fa-solid fa-angle-down flecha"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="enlace__nombre" href="#">Empresas</a></li>
+                    <li><a href="#" onclick="bus_empresa()">Buscar Empresa</a></li>
+                    <li><a href="#" onclick="edit_empresa()">Editar Empresa</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icono-enlace">
+                    <a href="#">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="enlace__nombre">Cotizaciones</span>
+                    </a>
+                    <i class="fa-solid fa-angle-down flecha"></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="enlace__nombre" href="#">Cotizaciones</a></li>
+                    <li><a href="#" onclick="reg_cotiz()">Registrar Cotizaciones</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span class="enlace__nombre">Seguimiento pagos OT</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="enlace__nombre" href="#">Seguimiento pagos OT</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="perfil-detalles">
+                    <div class="perfil-detalles__contenido">
+                        <img src="../images/admin.jpg" alt="Administrador">
+                    </div>
+                    <div class="perfil-detalles__usuario">
+                        <div class="usuario__nombre">Josue Bustamante</div>
+                        <div class="usuario__rol">Diseñador Web</div>
+                    </div>
+                    <a href="/auth/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+                </div>
+            </li>
+        </div>
+    </nav>
+    <section class="seccion-inicio">
+        <div class="seccion-inicio__contenido">
+            <i class="fas fa-chevron-circle-left"></i>
+            <span class="text">Fixmort S.A.C.</span>
+        </div>
+        <div id="content" class="content">
+
+        </div>
+    </section>
+
+      <script type="text/javascript">
+         let arrow = document.querySelectorAll(".flecha");
+         for (let i = 0; i <arrow.length; i++) {
+            arrow[i].addEventListener("click",(e)=>{
+               console.log(e);
+               let arrowParent = e.target.parentElement.parentElement;
+               arrowParent.classList.toggle("mostrarMenu");
+            })
+
+        }
+
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".fa-chevron-circle-left");
+        sidebarBtn.addEventListener("click", (e) => {
+            sidebar.classList.toggle("close");
+            let arrowSidebar = e.target
+            arrowSidebar.classList.toggle("flechaSidebar");
+        });
+        console.log(sidebar);
+        console.log(sidebarBtn);
+    </script>
+
 </body>
 
 </html>
