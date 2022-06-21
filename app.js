@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 const doenv = require("dotenv");
 const path = require('path');
 const hbs = require("hbs");
+// const ejs = require('ejs');
 const cookieParser = require("cookie-parser");
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
 // console.log(__dirname);
+// app.set('view engine', 'ejs');
 const location = path.join(__dirname, "./public");
 app.use(express.static(location));
 app.set("view engine", "hbs");

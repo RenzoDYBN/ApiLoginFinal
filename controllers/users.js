@@ -99,22 +99,61 @@ exports.register = (req, res) => {
 
 exports.edituser = (req, res) => {
     console.log(req.body);
-    const { dni_persona, codigo_rol, nombre_usuario, password } = req.body;
-    db.query('select nombre_usuario from usuarios where nombre_usuario=?', [nombre_usuario],
-        async(error, result) => {
+    // const { dni_persona, codigo_rol, nombre_usuario, password } = req.body;
+    // db.query('select nombre_usuario from usuarios where nombre_usuario=?', [nombre_usuario],
+    //     async(error, result) => {
+    //         if (error) {
+    //             confirm.log(error);
+    //         }
+    //         if (result.length > 0) {
+    //             return res.render("register", {
+    //                 msg: 'El usuario ya esta registrado , intenta con otro Usuario',
+    //                 msg_type: "error"
+    //             });
+    //         } else if (password !== cpassword) {
+    //             return res.render("register", { msg: "Las contraseñas no coinciden", msg_type: "error" })
+    //         }
+    //         let hashedPassord = await bcrypt.hash(password, 8);
+    //         console.log(hashedPassord);
+    //         // let codigo_rolN = Number(document.getElementById('codigo_rol').value);
+
+    //         db.query("insert into usuarios set ?", { dni_persona: dni_persona, codigo_rol: Number(codigo_rol), nombre_usuario: nombre_usuario, pass: hashedPassord, estado_usuario: "Activo" },
+    //             (error, result) => {
+    //                 if (error) {
+    //                     console.log(error);
+    //                 } else {
+    //                     console.log(result);
+    //                     return res.render("register", { msg: "Registro Exitoso", msg_type: "good" })
+    //                 }
+
+    //             })
+    //     });
+};
+
+exports.searchuser2 = (req, res) => {
+    console.log(req.body);
+    const { dni_persona } = req.body;
+    db.query('select * from usuarios where dni_persona=?', [dni_persona],
+        (error, result) => {
             if (error) {
                 confirm.log(error);
             }
-            if (result.length > 0) {
-                return res.render("register", {
-                    msg: 'El usuario ya esta registrado , intenta con otro Usuario',
-                    msg_type: "error"
-                });
-            } else if (password !== cpassword) {
-                return res.render("register", { msg: "Las contraseñas no coinciden", msg_type: "error" })
-            }
-            let hashedPassord = await bcrypt.hash(password, 8);
-            console.log(hashedPassord);
+            // if (dni_persona.length > 0) {
+            //     return res.render("register", {
+            //         msg: 'El dni ya esta registrado , intenta con otro dni',
+            //         msg_type: "error"
+            //     });
+            // }
+            // if (result.length > 9) {
+            //     return res.render("searchuser", {
+            //         msg: 'El usuario ya esta registrado , intenta con otro Usuario',
+            //         msg_type: "error"
+            //     });
+            // } else if (password !== cpassword) {
+            //     return res.render("register", { msg: "Las contraseñas no coinciden", msg_type: "error" })
+            // }
+            // let hashedPassord = await bcrypt.hash(password, 8);
+            // console.log(hashedPassord);
             // let codigo_rolN = Number(document.getElementById('codigo_rol').value);
 
             db.query("insert into usuarios set ?", { dni_persona: dni_persona, codigo_rol: Number(codigo_rol), nombre_usuario: nombre_usuario, pass: hashedPassord, estado_usuario: "Activo" },
@@ -131,36 +170,98 @@ exports.edituser = (req, res) => {
 };
 
 exports.searchuser = (req, res) => {
-    console.log(req.body);
-    const { dni_persona, codigo_rol, nombre_usuario, password } = req.body;
-    db.query('select nombre_usuario from usuarios where nombre_usuario=?', [nombre_usuario],
-        async(error, result) => {
-            if (error) {
-                confirm.log(error);
-            }
-            if (result.length > 0) {
-                return res.render("register", {
-                    msg: 'El usuario ya esta registrado , intenta con otro Usuario',
-                    msg_type: "error"
-                });
-            } else if (password !== cpassword) {
-                return res.render("register", { msg: "Las contraseñas no coinciden", msg_type: "error" })
-            }
-            let hashedPassord = await bcrypt.hash(password, 8);
-            console.log(hashedPassord);
-            // let codigo_rolN = Number(document.getElementById('codigo_rol').value);
+    var action = req.body.action;
 
-            db.query("insert into usuarios set ?", { dni_persona: dni_persona, codigo_rol: Number(codigo_rol), nombre_usuario: nombre_usuario, pass: hashedPassord, estado_usuario: "Activo" },
-                (error, result) => {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log(result);
-                        return res.render("register", { msg: "Registro Exitoso", msg_type: "good" })
-                    }
+    if (action == 'fetch') {
+        var query = "SELECT * FROM usuarios ORDER BY usuario ASC";
 
-                })
+        db.query(query, function(error, data) {
+
+            res.json({
+                data: data
+            });
+
         });
+    }
+
+
+    // if (action == 'Add') {
+    //     var dni_persona = req.body.dni_persona;
+
+    //     var nombre_usuario = req.body.nombre_usuario;
+
+    //     var age = req.body.age;
+
+    //     var gender = req.body.gender;
+
+    //     var query = `
+    // 	INSERT INTO sample_data 
+    // 	(first_name, last_name, age, gender) 
+    // 	VALUES ("${first_name}", "${last_name}", "${age}", "${gender}")
+    // 	`;
+
+    //     db.query(query, function(error, data) {
+
+    //         res.json({
+    //             message: 'Data Added'
+    //         });
+
+    //     });
+    // }
+
+    // if (action == 'fetch_single') {
+    //     var id = req.body.id;
+
+    //     var query = `SELECT * FROM sample_data WHERE id = "${id}"`;
+
+    //     db.query(query, function(error, data) {
+
+    //         res.json(data[0]);
+
+    //     });
+    // }
+
+    // if (action == 'Edit') {
+    //     var id = req.body.id;
+
+    //     var first_name = req.body.first_name;
+
+    //     var last_name = req.body.last_name;
+
+    //     var gender = req.body.gender;
+
+    //     var age = req.body.age;
+
+    //     var query = `
+    // 	UPDATE sample_data 
+    // 	SET first_name = "${first_name}", 
+    // 	last_name = "${last_name}", 
+    // 	age = "${age}", 
+    // 	gender = "${gender}" 
+    // 	WHERE id = "${id}"
+    // 	`;
+
+    //     db.query(query, function(error, data) {
+    //         response.json({
+    //             message: 'Data Edited'
+    //         });
+    //     });
+    // }
+
+    // if (action == 'delete') {
+    //     var id = req.body.id;
+
+    //     var query = `DELETE FROM sample_data WHERE id = "${id}"`;
+
+    //     db.query(query, function(error, data) {
+
+    //         response.json({
+    //             message: 'Data Deleted'
+    //         });
+
+    //     });
+    // }
+
 };
 
 
