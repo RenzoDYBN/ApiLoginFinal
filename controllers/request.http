@@ -3,7 +3,7 @@ GET http://localhost:5001/busqueda HTTP/1.1
 Content-Type: application/json
 
 {
-    "id_piezas": "1989"
+    "id_piezas": "tornillo"
 }
 
 ###
@@ -11,10 +11,9 @@ POST http://localhost:5001/agregar HTTP/1.1
 Content-Type: application/json
 
 {
-    "id_piezas": "88888",
-    "nombre_pieza": "prueba",
-    "descripcion_pieza": "prueva descripcion",
-    "stock_piezas": "10"
+    "nombre_pieza": "tornillo",
+    "descripcion_pieza": "tornillo acero",
+    "stock_piezas": "100"
 }
 
 ###
@@ -33,4 +32,3 @@ Content-Type: application/json
     "nombre_pieza": "rotores",
     "descripcion_pieza": "rotores de cobre",
     "stock_piezas": "02"
-}
