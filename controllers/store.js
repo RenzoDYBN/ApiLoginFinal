@@ -29,7 +29,7 @@ exports.busqueda = async(req, res) => {
 }  
 
 exports.agregar = async(req, res) => {
-    console.log('LLEGO AL AGREGAR')
+    console.log('LLEGO AL AGREGAR 2022')
 } 
 
 exports.eliminar = async(req, res) => {
