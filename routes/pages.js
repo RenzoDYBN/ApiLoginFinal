@@ -94,19 +94,33 @@ router.get("/home", userController.isLoggedIn, (req, res) => {
 
 //STORE-ALMACEN--JOSUE ROBLES 
 
-router.get("/busqueda",almacen_Controller.busqueda, (req, res) => {
+router.get("/busqueda", almacen_Controller.busqueda, (req, res) => {
     res.render("busqueda");
 });
-router.post("/agregar", almacen_Controller.agregar, (req, res) => {
-    res.render("agregar");
+router.post("/addpiece", almacen_Controller.addpiece, (req, res) => {
+    res.render("addpiece");
 });
+
+router.get("/home/addpiece", userController.isLoggedIn, (req, res) => {
+    // res.send("<h1>Hello Renzo</h1>")
+    // res.render("register", { user: req.user });
+    // res.redirect("/login");
+    if (req.user) {
+        res.render("addpiece", { user: req.user });
+    } else {
+        res.redirect("/login");
+    }
+
+
+});
+
 //router.delete("/eliminar", almacen_Controller.eliminar, (req, res) => {
 //    res.render("eliminar");
 //});
-router.get("/actualizar",almacen_Controller.actualizar, (req, res) => {
+router.get("/actualizar", almacen_Controller.actualizar, (req, res) => {
     res.render("actualizar");
 });
-router.get("/busqueda_id_piezas",almacen_Controller.busqueda_id_piezas, (req, res) => {
+router.get("/busqueda_id_piezas", almacen_Controller.busqueda_id_piezas, (req, res) => {
     res.render("busqueda_id_piezas");
 });
 

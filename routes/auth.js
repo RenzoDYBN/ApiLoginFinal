@@ -14,7 +14,7 @@ router.get("/logout", userController.logout);
 //STORE-ALMACEN
 router.get("/busqueda", almacen_Controller.busqueda);
 router.get("/busqueda_id_piezas", almacen_Controller.busqueda);
-router.post("/agregar", almacen_Controller.agregar);
+router.post("/addpiece", almacen_Controller.addpiece);
 router.put("/actualizar", almacen_Controller.actualizar);
 
 module.exports = router;

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js Login Fixmort</title>
+    {{!-- <link rel="stylesheet" href="../css/style.css">  --}}
+    <link rel="stylesheet" href="../css/agregar-pieza.css">
+    <link rel="stylesheet" href="../css/homestyle.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/ec9265bfa6.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    {{> navhomebar  }}
+    <div class="form-content">
+        <div class="l-form">
+            <form action="/auth/addpiece" method="POST" id="formulario" class="formulario">
+                <h1 class="formulario__titulo">Añadir Pieza</h1>
+                {{#if msg}}
+                <p class="{{msg_type}}">{{msg}}</p>
+                {{/if}}
+                <div class="flexbox">
+                    <div class="formulario__div">
+                        <input type="text" name="nombre_pieza" id="nombre_pieza" class="formulario__input" placeholder=" ">
+                        <label for="nombre_pieza" class="formulario__label">Nombre de Pieza</label>
+                    </div>
+                    <div class="formulario__div">
+                        <input type="text" name="descripcion_pieza" id="descripcion_pieza" class="formulario__input" placeholder=" ">
+                        <label for="descripcion_pieza" class="formulario__label">Descripción</label>
+                    </div>
+                    <div class="formulario__div">
+                        <input type="number" name="stock_piezas" id="stock_piezas" class="formulario__input" placeholder=" ">
+                        <label for="stock_piezas" class="formulario__label">Stock</label>
+                    </div>
+                </div>
+                <div class="formulario__div-botones" style="text-align:center;">
+                    <input type="submit" class="formulario__boton slide" value="Añadir Pieza">
+                    <input type="submit" class="formulario__boton slide" value="Cancelar">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+    <script>
+        function stateCheck($formularioSelectInput) {
+            if ($formularioSelectInput.val().length > 0) {
+                $formularioSelectInput.addClass('valid');
+            } else {
+                $formularioSelectInput.removeClass('valid');
+            }
+        }
+
+        $(function() {
+            
+            $('.formulario__select-input').on('focusout', function() {
+                stateCheck($(this));
+            });
+
+        });
+    </script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
