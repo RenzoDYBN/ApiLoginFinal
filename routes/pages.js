@@ -61,16 +61,16 @@ router.get("/home/searchuser", userController.isLoggedIn, (req, res) => {
 
 });
 
-router.get("/home/searchuser2", userController.isLoggedIn, (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
-    // res.redirect("/login");
-    if (req.user) {
-        res.render("searchuser", { user: req.user });
-    } else {
-        res.redirect("/login");
-    }
+// router.get("/home/searchuser2", userController.isLoggedIn, (req, res) => {
+//     // res.send("<h1>Hello Renzo</h1>")
+//     // res.redirect("/login");
+//     if (req.user) {
+//         res.render("searchuser", { user: req.user });
+//     } else {
+//         res.redirect("/login");
+//     }
 
-});
+// });
 
 
 router.get("/profile", userController.isLoggedIn, (req, res) => {

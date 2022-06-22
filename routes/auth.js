@@ -4,7 +4,7 @@ const almacen_Controller = require('../controllers/store');
 const router = express.Router();
 
 //CONTROL USUARIO 
-router.post("/searchuser2", userController.searchuser2);
+// router.post("/searchuser2", userController.searchuser2);
 router.post("/searchuser", userController.searchuser);
 router.post("/register", userController.register);
 router.post("/edituser", userController.edituser);

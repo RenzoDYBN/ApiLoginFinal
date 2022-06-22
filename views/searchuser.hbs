@@ -208,18 +208,13 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script>
-    $(document).ready(function () {
-    $('#sample_data').DataTable();
-    });
-</script>
-<script>
     $(document).ready(function() {
 
         load_data();
 
         function load_data() {
             $.ajax({
-                url: "http://localhost:5000/auth/searchuser",
+                url: "http://localhost:5001/auth/searchuser",
                 method: "POST",
                 data: {
                     action: 'fetch'
