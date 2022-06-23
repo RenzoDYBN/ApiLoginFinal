@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Usuario</title>
+    <script src="https://kit.fontawesome.com/ec9265bfa6.js" crossorigin="anonymous"></script>
+    <link href="../css/buscar-usuario.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/homestyle.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+
+    <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="../css/homestyle.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link href="https://cdn.datatables.net/1.12.0/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.12.0/js/dataTables.bootstrap5.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    
+    <script src="https://kit.fontawesome.com/ec9265bfa6.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+   {{> navhomebar }}
+    <div class="form-content">
+        <div class="l-form">
+            <div class="formulario">
+                <h1 class="formulario__titulo">Búsqueda de Usuario</h1>
+                {{#if msg}}
+                <p class="{{msg_type}}">{{msg}}</p>
+                {{/if}}
+                <div class="flexbox">
+                    {{!-- <div class="formulario__div">
+                        <select name="tip_busq" id="tip_busq" class="formulario__select-input" onchange="oppearInput()">
+                            <option value=""></option>
+                            <option value="dni">D.N.I.</option>
+                            <option value="nom_y_ape">Nombre y Apellidos</option>
+                        </select>
+                        <label for="tip_busq" class="formulario__select-label">Buscar por:</label>
+                    </div> --}}
+                    <form action="/auth/searchuser2" method="POST" id="formulario" class="formulario">
+                    <div class="formulario__div dni">
+                        <input type="number" name="dni_pesrona" id="dni_pesrona" class="formulario__input" placeholder=" ">
+                        <label for="dni_pesrona" class="formulario__label">D.N.I.</label>
+                    </div>
+                    {{!-- <div class="formulario__div">
+                        <select name="codigo_rol" id="codigo_rol" class="formulario__select-input">
+                            <option value=""></option>
+                            <option value="1">Administrador</option>
+                            <option value="2">Produccion</option>
+                            <option value="3">RRHH</option>
+                            <option value="4">Ventas</option>
+                            <option value="5">Almacen</option>
+                            <option value="6">Gerencia</option>
+                            <option value="7">Contabilidad</option>
+                        </select>
+                        <label for="codigo_rol" class="formulario__select-label">Rol del usuario</label>
+                    </div> --}}
+                    <div class="formulario__div">
+                        <div style="text-align:center;">
+                            <button type="submit" class="formulario__boton-single slide"><span>Buscar Usuario</span></button>
+                        </div>
+                    </div>
+                    </form>
+                    {{!-- <div class="formulario__div">
+                        <div style="text-align:center;">
+                            <button type="submit" class="formulario__boton-single slide"><span>Buscar Persona</span></button>
+                        </div>
+                        <div class="formulario__div nombre">
+                            <input type="text" name="nombre" id="nombre" class="formulario__input" placeholder=" ">
+                            <label for="nombre" class="formulario__label">Nombres</label>
+                        </div>
+                    </div> --}}
+                    <div class="tabla-contenedor">
+                        <!-- <div class="table-responsive">  -->
+                        <table id="sample_data" class="tabla">
+                            <thead>
+                                <tr>
+                                <th>Id</th>
+                                <th>Dni</th>
+                                <th>Codigo Rol</th>
+                                <th>Nombre Usuario</th>
+                                <th>Contraseña</th>
+                                <th>Estado Usuario</th>
+                                <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="pie-tabla">
+                            <div class="lista-elementos">
+                                Ver
+                                <select name="n-entradas" id="n-entradas" class="n-entradas"> 
+                                <option value="5">5</option>
+                                <option value="10" selected>10</option>
+                                <option value="15">15</option>
+                            </select> Filas
+                            </div>
+                            <div class="paginas">
+                                <ul>
+                                    <li><span class="active">1</span></li>
+                                    <li><button>2</button></li>
+                                    <li><button>3</button></li>
+                                    <li><button>4</button></li>
+                                    <li><span>...</span></li>
+                                    <li><button>9</button></li>
+                                    <li><button>10</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                    {{!-- <p class="warnings" id="warnings"></p> --}}
+                    <div class="formulario__div-botones" style="text-align:center;">
+                        <input type="button" class="formulario__boton slide" value="Registrar" onclick="clickButton()">
+                    </div>
+            </div>
+            </div>
+        </div>
+   {{!-- <div class="container">
+        <h1 class="mt-4 mb-4 text-center text-primary"><b></b></h1>
+
+        <span id="message"></span>
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col col-sm-9">Sample Data</div>
+                    <div class="col col-sm-3">
+                        <button type="button" id="add_data" class="btn btn-success btn-sm float-end">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" id="sample_data">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Dni</th>
+                                <th>Codigo_Rol</th>
+                                <th>Nom Usuario</th>
+                                <th>Contraseña</th>
+                                <th>Estado Usuario</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+</body>
+
+</html>
+
+<div class="modal" tabindex="-1" id="action_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="sample_form">
+                <div class="modal-header" id="dynamic_modal_title">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Id</label>
+                        <input type="text" name="usuario" id="usuario" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Dni</label>
+                        <input type="text" name="dni_persona" id="dni_persona" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Codigo_Rol</label>
+                        <input type="text" name="codigo_rol" id="codigo_rol" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nom Usuario</label>
+                        <input type="text" name="nombre_usuario" id="nombre_usuario" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input type="text" name="pass" id="pass" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Estado Usuario</label>
+                        <input type="text" name="estado_usuario" id="estado_usuario" class="form-control" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+   
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+    $(document).ready(function () {
+    $('#sample_data').DataTable();
+});
+</script>
+<script>
+    $(document).ready(function() {
+
+        load_data();
+
+        function load_data() {
+            $.ajax({
+                url: "http://localhost:5001/auth/searchuser",
+                method: "POST",
+                data: {
+                    action: 'fetch'
+                },
+                dataType: "JSON",
+                success: function(data) {
+                    var html = '';
+
+                    if (data.data.length > 0) {
+                        for (var count = 0; count < data.data.length; count++) {
+                            html += `
+                        <tr>
+                            <td>` + data.data[count].usuario + `</td>
+                            <td>` + data.data[count].dni_persona + `</td>
+                            <td>` + data.data[count].codigo_rol + `</td>
+                            <td>` + data.data[count].nombre_usuario + `</td>
+                            <td>` + data.data[count].pass + `</td>
+                            <td>` + data.data[count].estado_usuario + `</td>
+                            <td><button type="button" class="btn btn-warning btn-sm edit" data-id="` + data.data[count].usuario + `">Editar</button>&nbsp;<button type="button" class="btn btn-danger btn-sm delete" data-id="` + data.data[count].usuario + `">Eliminar</button></td>
+                        </tr>
+                        `;
+                        }
+                    }
+
+                    $('#sample_data tbody').html(html);
+                }
+            });
+        }
+
+        $('#add_data').click(function() {
+
+            $('#dynamic_modal_title').text('Add Data');
+
+            $('#sample_form')[0].reset();
+
+            $('#action').val('Add');
+
+            $('#action_button').text('Add');
+
+            $('#action_modal').modal('show');
+
+        });
+
+        $('#sample_form').on('submit', function(event) {
+
+            event.preventDefault();
+
+            $.ajax({
+                url: "http://localhost:3000/sample_data/action",
+                method: "POST",
+                data: $('#sample_form').serialize(),
+                dataType: "JSON",
+                beforeSend: function() {
+                    $('#action_button').attr('disabled', 'disabled');
+                },
+                success: function(data) {
+                    $('#action_button').attr('disabled', false);
+
+                    $('#message').html('<div class="alert alert-success">' + data.message + '</div>');
+
+                    $('#action_modal').modal('hide');
+
+                    load_data();
+
+                    setTimeout(function() {
+                        $('#message').html('');
+                    }, 5000);
+                }
+            });
+
+        });
+
+        $(document).on('click', '.edit', function() {
+
+            var id = $(this).data('id');
+
+            $('#dynamic_modal_title').text('Edit Data');
+
+            $('#action').val('Edit');
+
+            $('#action_button').text('Edit');
+
+            $('#action_modal').modal('show');
+
+            $.ajax({
+                url: "http://localhost:3000/sample_data/action",
+                method: "POST",
+                data: {
+                    id: id,
+                    action: 'fetch_single'
+                },
+                dataType: "JSON",
+                success: function(data) {
+                    $('#first_name').val(data.first_name);
+                    $('#last_name').val(data.last_name);
+                    $('#gender').val(data.gender);
+                    $('#age').val(data.age);
+                    $('#id').val(data.id);
+                }
+            });
+
+        });
+
+        $(document).on('click', '.delete', function() {
+
+            var id = $(this).data('id');
+
+            if (confirm("Are you sure you want to delete this data?")) {
+                $.ajax({
+                    url: "http://localhost:3000/sample_data/action",
+                    method: "POST",
+                    data: {
+                        action: 'delete',
+                        id: id
+                    },
+                    dataType: "JSON",
+                    success: function(data) {
+                        $('#message').html('<div class="alert alert-success">' + data.message + '</div>');
+                        load_data();
+                        setTimeout(function() {
+                            $('#message').html('');
+                        }, 5000);
+                    }
+                });
+            }
+
+        });
+    });
+</script>
+<script>
+        function stateCheck($formularioSelectInput) {
+            if ($formularioSelectInput.val().length > 0) {
+                $formularioSelectInput.addClass('valid');
+            } else {
+                $formularioSelectInput.removeClass('valid');
+            }
+        }
+
+        $(function() {
+            
+            $('.formulario__select-input').on('focusout', function() {
+                stateCheck($(this));
+            });
+
+        });
+    </script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

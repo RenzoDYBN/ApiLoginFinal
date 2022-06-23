@@ -250,6 +250,10 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 8.8rem auto;
 }
 
+.dataTables_filter {
+    display: none;
+}
+
 .formulario {
     width: 360px;
     padding: 0 2rem 2.5rem;

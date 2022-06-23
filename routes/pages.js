@@ -1,7 +1,16 @@
 const express = require("express");
 const router = express.Router();
+const mysql = require("mysql2");
 const userController = require('../controllers/users');
 const almacen_Controller = require('../controllers/store');
+
+const db = mysql.createConnection({
+    host: process.env.DATABASE_HOST,
+    port: process.env.DATABASE_PORT,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASS,
+    database: process.env.DATABASE
+});
 
 router.get(["/", "/login"], (req, res) => {
     // res.send("<h1>Hello Renzo</h1>")
@@ -61,16 +70,25 @@ router.get("/home/searchuser", userController.isLoggedIn, (req, res) => {
 
 });
 
-// router.get("/home/searchuser2", userController.isLoggedIn, (req, res) => {
-//     // res.send("<h1>Hello Renzo</h1>")
-//     // res.redirect("/login");
-//     if (req.user) {
-//         res.render("searchuser", { user: req.user });
-//     } else {
-//         res.redirect("/login");
-//     }
+//creando ruta para consultar para extraer data usuarios
+router.get("/data", userController.isLoggedIn, (req, res) => {
+    db.query("select * from usuarios", (error, results) => {
+        if (error) {
+            throw error;
 
-// });
+        } else {
+            data = JSON.stringify(results);
+            res.send(data);
+        }
+    })
+
+    // if (req.user) {
+    //     res.render("searchuser", { user: req.user });
+    // } else {
+    //     res.redirect("/login");
+    // }
+
+});
 
 
 router.get("/profile", userController.isLoggedIn, (req, res) => {
