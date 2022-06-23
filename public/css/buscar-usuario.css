@@ -45,9 +45,13 @@
 
 /* ===== DISEÑO DE LA TABLA ===== */
 
+.tabla {
+    color: white;
+}
+
 .tabla-contenedor {
     border-radius: var(--tbl-border-radius);
-    color: var(--tbl-text-color);
+    /* color: var(--tbl-text-color); */
     width: 100%;
     margin: 0 auto;
     font-size: var(--tamaño-fuente-normal);
@@ -250,9 +254,10 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 8.8rem auto;
 }
 
-.dataTables_filter {
+
+/* .dataTables_filter {
     display: none;
-}
+} */
 
 .formulario {
     width: 360px;
