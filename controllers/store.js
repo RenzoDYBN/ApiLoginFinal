@@ -87,7 +87,7 @@ exports.actualizar = async(req, res) => {
 }
 
 
-//AGREGAMOS LAS PIEZAS NUEVAS A LA BASE DE DATOS
+
 // exports.addpiece = async(req, res) => {
 
 //     console.log(req.body);
@@ -99,15 +99,17 @@ exports.actualizar = async(req, res) => {
 //     console.log('LLEGO AL AGREGAR 2022')
 // }
 
-
+//AGREGAMOS LAS PIEZAS NUEVAS A LA BASE DE DATOS
 exports.addpiece = (req, res) => {
     console.log(req.body);
     const { nombre_pieza, descripcion_pieza, stock_piezas } = req.body;
     db.query('select * from almacen where nombre_pieza=?', [nombre_pieza],
         (error, result) => {
-            if (error) {
-                confirm.log(error);
+            if (result.length > 0) {
+              console.log(result.length);
+                return res.render("addpiece", { msg: "El nombre de pieza que intenta registrar ya existe", msg_type: "error" })
             } else {
+              console.log(result);
                 db.query("insert into almacen set ?", { nombre_pieza: nombre_pieza, descripcion_pieza: descripcion_pieza, stock_piezas: stock_piezas },
                     (error, result) => {
                         if (error) {
@@ -116,10 +118,8 @@ exports.addpiece = (req, res) => {
                             console.log(result);
                             return res.render("addpiece", { msg: "Registro Exitoso", msg_type: "good" })
                         }
-
                     })
             }
-
         });
 };
 
