@@ -22,6 +22,29 @@ router.get("/register", userController.isLoggedIn, (req, res) => {
     res.render("register");
 
 });
+//creando ruta para consultar para extraer data usuarios
+router.get("/data", userController.isLoggedIn, (req, res) => {
+    db.query("select * from usuarios", (error, results) => {
+        if (error) {
+            throw error;
+
+        } else {
+            data = JSON.stringify(results);
+            res.send(data);
+        }
+    })
+
+});
+
+router.get("/home", userController.isLoggedIn, (req, res) => {
+    // res.send("<h1>Hello Renzo</h1>")
+    // console.log(req.name);
+    if (req.user) {
+        res.render("home", { user: req.user });
+    } else {
+        res.redirect("/login");
+    }
+});
 
 router.get("/home/register", userController.isLoggedIn, (req, res) => {
     // res.send("<h1>Hello Renzo</h1>")
@@ -36,23 +59,7 @@ router.get("/home/register", userController.isLoggedIn, (req, res) => {
 
 });
 
-router.get("/edituser", userController.isLoggedIn, (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
-    res.render("edituser");
-
-});
-
-router.get("/home/edituser", userController.isLoggedIn, (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
-    // res.redirect("/login");
-    if (req.user) {
-        res.render("edituser", { user: req.user });
-    } else {
-        res.redirect("/login");
-    }
-
-});
-
+//revisando
 router.get("/searchuser", userController.isLoggedIn, (req, res) => {
     // res.send("<h1>Hello Renzo</h1>")
     res.render("searchuser");
@@ -60,54 +67,12 @@ router.get("/searchuser", userController.isLoggedIn, (req, res) => {
 });
 
 router.get("/home/searchuser", userController.isLoggedIn, (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
-    // res.redirect("/login");
     if (req.user) {
         res.render("searchuser", { user: req.user });
     } else {
         res.redirect("/login");
     }
 
-});
-
-//creando ruta para consultar para extraer data usuarios
-router.get("/data", userController.isLoggedIn, (req, res) => {
-    db.query("select * from usuarios", (error, results) => {
-        if (error) {
-            throw error;
-
-        } else {
-            data = JSON.stringify(results);
-            res.send(data);
-        }
-    })
-
-    // if (req.user) {
-    //     res.render("searchuser", { user: req.user });
-    // } else {
-    //     res.redirect("/login");
-    // }
-
-});
-
-
-router.get("/profile", userController.isLoggedIn, (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
-    if (req.user) {
-        res.render("profile", { user: req.user });
-    } else {
-        res.redirect("/login");
-    }
-});
-
-router.get("/home", userController.isLoggedIn, (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
-    // console.log(req.name);
-    if (req.user) {
-        res.render("home", { user: req.user });
-    } else {
-        res.redirect("/login");
-    }
 });
 
 //STORE-ALMACEN--JOSUE ROBLES BUSTAMANTE

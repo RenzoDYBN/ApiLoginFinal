@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Búsqueda de Usuario</title>
+    <script src="https://kit.fontawesome.com/ec9265bfa6.js" crossorigin="anonymous"></script>
+    <link href="../css/buscar-usuario.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/homestyle.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.min.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap5.min.css">
+</head>
+
+<body>
+    {{> navhomebar}}
+  <div class="form-content">
+        <div class="l-form">
+            <div class="formulario">
+                <button id="add_data" class="btn btn-primary mt-2 bt2">Crear Usuario</button>
+            <h1 class="formulario__titulo">Búsqueda de Usuarios</h1>
+            <div class="tabla-contenedor">
+               <table id="tablaUsuarios" class="tabla table-striped" style="width:100%">
+               <thead>
+                 <tr>
+                    <th>Id</th>
+                    <th>Dni</th>
+                    <th>Codigo Rol</th>
+                    <th>Nombre Usuario</th>
+                    <th>Contraseña</th>
+                    <th>Estado Usuario</th>
+                    <th>Acciones</th>
+                </tr>
+               </thead>
+               <tbody>
+               </tbody>
+               </table> 
+            </div>
+            </div>
+        </div>
+    </div>
+
+ <!--Modal para CRUD-->
+    <div id="modalCRUD" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>                
+                </div>
+                <form method="post" id="formUsuarios">    
+                    <div class="modal-body">                
+                            <label for="" class="col-form-label">DNI</label>
+                            <input type="number" class="form-control" id="dni_persona">
+                        
+                            <label for="" class="col-form-label">Nombre usuario</label>
+                            <input id="nombre_usuario" type="text" step="0.01" class="form-control">
+                        
+                            <label for="" class="col-form-label">Contraseña</label>
+                            <input id="password" type="password" class="form-control">
+
+                            <label for="" class="col-form-label">Confirmar Contraseña</label>
+                            <input id="cpassword" type="password" class="form-control">
+                            
+                            <label for="" class="col-form-label">Selecciona el Rol</label>
+                            <select name="codigo_rol" id="codigo_rol" class="form-control">
+                            <option value=""></option>
+                            <option value="1">Administrador</option>
+                            <option value="2">Produccion</option>
+                            <option value="3">RRHH</option>
+                            <option value="4">Ventas</option>
+                            <option value="5">Almacen</option>
+                            <option value="6">Gerencia</option>
+                            <option value="7">Contabilidad</option>
+                            </select>
+                    </div>                                  
+                    <div class="modal-footer">
+                        <input type="hidden" name="usuario" id="usuario" />
+                        <input type="hidden" name="action" id="action" value="Add" />
+                        <button type="submit" id="action_button" class="btn btn-success bt3">Registrar</button>
+                        <button type="button" class="btn btn-danger bt3" data-dismiss="modal">Cancelar</button>
+                    </div>  
+                </form>
+            </div>
+        </div>
+    </div>  
+
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap5.min.js"></script>        
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js" integrity="sha384-5h4UG+6GOuV9qXh6HqOLwZMY4mnLPraeTrjT5v07o347pj6IkfuoASuGBhfDsp3d" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.0.2/dist/sweetalert2.all.min.js"></script>
+
+
+<script>
+    
+     $(document).ready(function() {  
+     $('#tablaUsuarios').DataTable({    
+    ajax: {
+        url: "",
+        dataSrc: ""
+    },   
+    columns: [ 
+    {"data":"usuario"},
+    {"data":"dni_persona"},
+    {"data":"codigo_rol"},
+    {"data":"nombre_usuario"},
+    {"data":"pass"},
+    {"data":"estado_usuario",
+    "render": function(data, type, row) {
+        if(data == "Activo"){
+            return '<span class="available">'+data+'</span>'
+        }else{
+            return '<span class="away">'+data+'</span>'
+        }      
+    }
+    },        
+    {"data": null,
+    "render": function (data) { 
+                return '<a href="/edit/'+data.usuario+ '"class="btn btn-info"><i class="fas fa-edit"></i></a><a onclick="confirmar('+data.usuario+')" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>'                           
+                }
+        }
+    ],
+    pageLength : 5,
+    lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']]     
+     }); 
+          
+
+    $('#add_data').click(function(){
+
+        $('.modal-title').text('Crear Usuario');
+
+        $('#formUsuarios')[0].reset();
+
+        $('#action').val('Add');
+
+        $('#action_button').text('Add');
+
+        $(".modal-header").css( "background-color", "#23272b");
+
+        $(".modal-header").css( "color", "white" );
+
+        $('#modalCRUD').modal('show');
+        
+
+    });
+
+//submit para el CREAR USUARIO
+ $('#formUsuarios').on('submit', function(event){
+
+        event.preventDefault();
+
+        $.ajax({
+            url:"http://localhost:5001/auth/searchuser",
+            method:"POST",
+            data:$('#formUsuarios').serialize(),
+            dataType:"JSON",
+            beforeSend:function(){
+                $('#formUsuarios').attr('disabled', 'disabled');
+            },
+            success:function(data)
+            {
+                $('#action_button').attr('disabled', false);
+
+                $('#message').html('<div class="alert alert-success">'+data.message+'</div>');
+
+                $('#action_modal').modal('hide');
+
+                load_data();
+
+                setTimeout(function(){
+                    $('#message').html('');
+                }, 5000);
+            }
+        });
+
+    });
+
+    } );
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

@@ -163,20 +163,20 @@
     border: solid 2px var(--tbl-border-color);
 }
 
-.tabla-contenedor .tabla tbody tr .avaible::after,
+.tabla-contenedor .tabla tbody tr .available::after,
 .tabla-contenedor .tabla tbody tr .away::after,
 .tabla-contenedor .tabla tbody tr .offline::after {
     display: inline-block;
     vertical-align: middle;
 }
 
-.tabla-contenedor .tabla tbody tr .available::after {
-    content: 'Disponible';
+.available::after {
+    /* content: 'Disponible'; */
     color: var(--tbl-status-available-color);
 }
 
 .tabla-contenedor .tabla tbody tr .away::after {
-    content: 'Ausente';
+    /* content: 'Ausente'; */
     color: var(--tbl-status-away-color);
 }
 
@@ -282,6 +282,10 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-border-radius: 15px 15px 0 0;
     -ms-border-radius: 15px 15px 0 0;
     -o-border-radius: 15px 15px 0 0;
+}
+
+.bt2 {
+    width: 8%;
 }
 
 .flexbox {
