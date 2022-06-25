@@ -89,7 +89,7 @@ exports.register = (req, res) => {
                 })
         });
 };
-
+//pegar aqui searchuser
 exports.searchuser = (req, res) => {
     var action = req.body.action;
 
@@ -98,12 +98,10 @@ exports.searchuser = (req, res) => {
 
         var dni_persona = req.body.dni_persona;
         var codigo_rol = req.body.codigo_rol;
-        var nombre_usuario = req.body.nombre_usuario;
         var password = req.body.password;
         var cpassword = req.body.cpassword;
-
+        // var cpass = req.body.cpass;
         console.log(action);
-<<<<<<< HEAD
         
         db.query("select * from usuarios where dni_persona=?", [dni_persona],
         async(error, result) => {
@@ -111,14 +109,24 @@ exports.searchuser = (req, res) => {
                 confirm.log(error);
             }
             if (result.length == 0) {
-                adduser();
+                if (password !== cpassword) {
+                    return res.render("searchuser", { msg: "Las contraseñas no coinciden", msg_type: "error" })
+                }else{
+                    let hashedPassword = await bcrypt.hash(password, 8);
+                    console.log(hashedPassword);   
+                    adduser(hashedPassword);
+                }
             }else{
-                console.log("ya existe usuario con ese DNI");
+                console.log("Ya existe usuario con ese DNI");
+                return res.render("searchuser", {
+                   // msg: 'El DNI ya esta registrado, intenta con otro DNI',
+                    //msg_type: "error"
+                });
             }
         }  
         )
 
-        function adduser() {
+        function adduser(hashedPassword) {
              //VALIDACION PARA LA CREACION DE EL USUARIO primera letra de primer nombre + primer apellido + primera letra de 2do apellido ( Jose Manuel Perez Ramirez, jperezr)
              console.log("DNI en function"+ dni_persona);
         db.query('SELECT nombre_persona,apellido_paterno,apellido_materno FROM personas WHERE dni_persona = ?',
@@ -132,7 +140,66 @@ exports.searchuser = (req, res) => {
               console.log('nombre_persona:' + data1);
               console.log('apellido_paterno:' + data2);
               console.log('apellido_materno:' + data3);
-=======
+
+                //res.json(rows);
+                data1 = JSON.stringify(results[0].nombre_persona);
+                data2 = JSON.stringify(results[0].apellido_paterno);
+                data3 = JSON.stringify(results[0].apellido_materno);
+                console.log('nombre_persona:' + data1);
+                console.log('apellido_paterno:' + data2);
+                console.log('apellido_materno:' + data3);
+
+                let result1 = data1.substring(2, 1);
+                const result2 = data2.slice(1, -1)
+                console.log('apellido_paterno recortado:' + result2);
+                let result3 = data3.substring(2, 1);
+
+                console.log('nombre_persona:' + result1);
+                console.log('apellido_paterno:' + result2);
+                console.log('apellido_materno:' + result3);
+
+                const nombre_usuario_mayusculas = result1.concat(result2, result3);
+                var nombre_usuario = nombre_usuario_mayusculas.toLowerCase();
+                console.log('USUARIO A CREAR:' + nombre_usuario);
+
+                //INSERTAMOS AL NUEVO USUARIO
+                var query = `INSERT INTO usuarios (dni_persona, codigo_rol, nombre_usuario, pass, estado_usuario) 
+             VALUES ("${dni_persona}", "${codigo_rol}", "${nombre_usuario}", "${hashedPassword}", "Activo")
+             `;
+                db.query(query, function(error, data) {
+                    // console.log(action);
+                    res.json({
+                        message: 'Data Added'
+                    });
+                });
+
+
+            } else {
+                console.log(err);
+            }
+      
+          });
+        }
+    }
+
+     //   });
+    //}
+};
+
+
+exports.searchuser_renzo = (req, res) => {
+    var action = req.body.action;
+
+
+    if (action == 'Add') {
+
+        var dni_persona = req.body.dni_persona;
+        var codigo_rol = req.body.codigo_rol;
+        var nombre_usuario = req.body.nombre_usuario;
+        var password = req.body.password;
+        var cpassword = req.body.cpassword;
+
+        console.log(action);
         db.query("select dni_persona from usuarios where dni_persona=?", [dni_persona],
             async(error, result) => {
                 // console.log(result);
@@ -155,7 +222,6 @@ exports.searchuser = (req, res) => {
                         data1 = JSON.stringify(results[0].nombre_persona);
                         data2 = JSON.stringify(results[0].apellido_paterno);
                         data3 = JSON.stringify(results[0].apellido_materno);
->>>>>>> d3422b9b4a4ff4c2100012c2e65108fcb76294ba
 
                         let result1 = data1.substring(2, 1);
                         const result2 = data2.slice(1, -1)
@@ -185,77 +251,9 @@ exports.searchuser = (req, res) => {
                 });
 
             }
-<<<<<<< HEAD
-      
-          });
-        }
-
-/*
-        //VALIDACION PARA LA CREACION DE EL USUARIO primera letra de primer nombre + primer apellido + primera letra de 2do apellido ( Jose Manuel Perez Ramirez, jperezr)
-        db.query('SELECT nombre_persona,apellido_paterno,apellido_materno FROM personas WHERE dni_persona = ?',
-        [dni_persona],(err, results, fields) => {
-            if(!err){
-              
-              //res.json(rows);
-              data1 = JSON.stringify(results[0].nombre_persona); 
-              data2 = JSON.stringify(results[0].apellido_paterno); 
-              data3 = JSON.stringify(results[0].apellido_materno);            
-              console.log('nombre_persona:' + data1);
-              console.log('apellido_paterno:' + data2);
-              console.log('apellido_materno:' + data3);
-
-              let result1 = data1.substring(2, 1);
-              const result2 = data2.slice(1, -1)
-              console.log('apellido_paterno recortado:' + result2);
-              let result3 = data3.substring(2, 1);
-
-              console.log('nombre_persona:' + result1);
-              console.log('apellido_paterno:' + result2);
-              console.log('apellido_materno:' + result3);
-
-              const nombre_usuario_mayusculas = result1.concat(result2, result3);
-              var nombre_usuario = nombre_usuario_mayusculas.toLowerCase();
-              console.log('USUARIO A CREAR:' + nombre_usuario);
-
-              //INSERTAMOS AL NUEVO USUARIO
-             var query = `INSERT INTO usuarios (dni_persona, codigo_rol, nombre_usuario, pass, estado_usuario) 
-             VALUES ("${dni_persona}", "${codigo_rol}", "${nombre_usuario}", "${pass}", "Activo")
-             `;
-                   db.query(query, function(error, data) {
-                    // console.log(action);
-                   //res.json({
-                   //message: 'Data Added'
-                   //});
-            });
-
-
-            }else {
-              console.log(err);
-            }
-      
-          });
-*/
-
-
-
-=======
         );
 
     }
-
-    if (action == 'fetch_single') {
-        var usuario = req.body.usuario;
-
-        var query3 = `SELECT * FROM usuarios WHERE usuario = "${usuario}"`;
-
-        db.query(query3, function(error, data) {
-
-            res.json(data[0]);
-
-        });
->>>>>>> d3422b9b4a4ff4c2100012c2e65108fcb76294ba
-    }
-
 };
 
 
