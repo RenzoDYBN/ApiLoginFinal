@@ -92,51 +92,53 @@ exports.register = (req, res) => {
 
 exports.searchuser = (req, res) => {
     var action = req.body.action;
-    console.log(action);
+
+
     if (action == 'Add') {
         var dni_persona = req.body.dni_persona;
-
         var codigo_rol = req.body.codigo_rol;
-
         var nombre_usuario = req.body.nombre_usuario;
+        var password = req.body.password;
+        var cpassword = req.body.cpassword;
 
-        var pass = req.body.pass;
+        db.query('select nombre_usuario from usuarios where nombre_usuario=?', [nombre_usuario],
+            async(error, result) => {
+                // console.log(result);
+                if (error) {
+                    confirm.log(error);
+                }
+                if (result.length > 0) {
+                    return res.render("searchuser", {
+                        msg: 'El usuario ya esta registrado , intenta con otro Usuario',
+                        msg_type: "error"
+                    });
+                } else if (password !== cpassword) {
+                    return res.render("searchuser", { msg: "Las contraseñas no coinciden", msg_type: "error" })
+                }
+                let hashedPassord = await bcrypt.hash(password, 8);
+                console.log(hashedPassord);
 
-        // var cpass = req.body.cpass;
-        console.log(action);
-
-        var query = `
+                var query = `
         INSERT INTO usuarios 
         (dni_persona, codigo_rol, nombre_usuario, pass, estado_usuario) 
-        VALUES ("${dni_persona}", "${codigo_rol}", "${nombre_usuario}", "${pass}", "Activo")
+        VALUES ("${dni_persona}", "${Number(codigo_rol)}", "${nombre_usuario}", "${hashedPassord}", "Activo")
         `;
 
-        db.query(query, function(error, data) {
-            // console.log(action);
-            res.json({
-                message: 'Data Added'
+                db.query(query, function(error, data) {
+                    // console.log(action);
+                    if (error) {
+                        r
+                    } else {
+                        res.json({
+                            message: 'Registro de usuario Exitoso'
+                        });
+                    }
 
+                });
             });
-
-        });
-
-
-        // db.query("insert into usuarios set ?", { dni_persona: dni_persona, codigo_rol: Number(codigo_rol), nombre_usuario: nombre_usuario, pass: password, estado_usuario: "Activo" },
-        //     (error, result) => {
-        //         if (error) {
-        //             console.log(error);
-        //         } else {
-        //             response.json({
-        //                 message: 'Data Added'
-        //             });
-        //         }
-
-        //     })
-
 
 
     }
-
 };
 
 
