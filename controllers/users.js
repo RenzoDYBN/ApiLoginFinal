@@ -95,49 +95,59 @@ exports.searchuser = (req, res) => {
 
 
     if (action == 'Add') {
+
         var dni_persona = req.body.dni_persona;
         var codigo_rol = req.body.codigo_rol;
-        var nombre_usuario = req.body.nombre_usuario;
-        var password = req.body.password;
-        var cpassword = req.body.cpassword;
-
-        db.query('select nombre_usuario from usuarios where nombre_usuario=?', [nombre_usuario],
+        var pass = req.body.pass;
+        // var cpass = req.body.cpass;
+        console.log(action);
+        db.query("select * from usuarios where dni_persona=?", [dni_persona],
             async(error, result) => {
-                // console.log(result);
-                if (error) {
-                    confirm.log(error);
-                }
-                if (result.length > 0) {
-                    return res.render("searchuser", {
-                        msg: 'El usuario ya esta registrado , intenta con otro Usuario',
-                        msg_type: "error"
-                    });
-                } else if (password !== cpassword) {
-                    return res.render("searchuser", { msg: "Las contraseñas no coinciden", msg_type: "error" })
-                }
-                let hashedPassord = await bcrypt.hash(password, 8);
-                console.log(hashedPassord);
+                console.log(result);
+            }
+        );
+        //VALIDACION PARA LA CREACION DE EL USUARIO primera letra de primer nombre + primer apellido + primera letra de 2do apellido ( Jose Manuel Perez Ramirez, jperezr)
+        db.query('SELECT nombre_persona,apellido_paterno,apellido_materno FROM personas WHERE dni_persona = ?', [dni_persona], (err, results, fields) => {
+            if (!err) {
 
-                var query = `
-        INSERT INTO usuarios 
-        (dni_persona, codigo_rol, nombre_usuario, pass, estado_usuario) 
-        VALUES ("${dni_persona}", "${Number(codigo_rol)}", "${nombre_usuario}", "${hashedPassord}", "Activo")
-        `;
+                //res.json(rows);
+                data1 = JSON.stringify(results[0].nombre_persona);
+                data2 = JSON.stringify(results[0].apellido_paterno);
+                data3 = JSON.stringify(results[0].apellido_materno);
+                console.log('nombre_persona:' + data1);
+                console.log('apellido_paterno:' + data2);
+                console.log('apellido_materno:' + data3);
 
+                let result1 = data1.substring(2, 1);
+                const result2 = data2.slice(1, -1)
+                console.log('apellido_paterno recortado:' + result2);
+                let result3 = data3.substring(2, 1);
+
+                console.log('nombre_persona:' + result1);
+                console.log('apellido_paterno:' + result2);
+                console.log('apellido_materno:' + result3);
+
+                const nombre_usuario_mayusculas = result1.concat(result2, result3);
+                var nombre_usuario = nombre_usuario_mayusculas.toLowerCase();
+                console.log('USUARIO A CREAR:' + nombre_usuario);
+
+                //INSERTAMOS AL NUEVO USUARIO
+                var query = `INSERT INTO usuarios (dni_persona, codigo_rol, nombre_usuario, pass, estado_usuario) 
+             VALUES ("${dni_persona}", "${codigo_rol}", "${nombre_usuario}", "${pass}", "Activo")
+             `;
                 db.query(query, function(error, data) {
                     // console.log(action);
-                    if (error) {
-                        r
-                    } else {
-                        res.json({
-                            message: 'Registro de usuario Exitoso'
-                        });
-                    }
-
+                    res.json({
+                        message: 'Data Added'
+                    });
                 });
-            });
 
 
+            } else {
+                console.log(err);
+            }
+
+        });
     }
 };
 
