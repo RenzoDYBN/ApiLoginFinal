@@ -102,7 +102,7 @@
      $(document).ready(function() {  
      $('#tablaUsuarios').DataTable({    
     ajax: {
-        url: "",
+        url: "/data",
         dataSrc: ""
     },   
     columns: [ 
@@ -156,7 +156,7 @@
         event.preventDefault();
 
         $.ajax({
-            url:"http://localhost:5001/auth/searchuser",
+            url:"http://localhost:5003/auth/searchuser",
             method:"POST",
             data:$('#formUsuarios').serialize(),
             dataType:"JSON",

@@ -73,6 +73,17 @@ router.get("/home/searchuser", userController.isLoggedIn, (req, res) => {
         res.redirect("/login");
     }
 
+    // db.query("select dni_persona, apellido_paterno, apellido_materno from personas", (error, results) => {
+    //     if (error) {
+    //         throw error;
+
+    //     } else {
+    //         data2 = JSON.stringify(results);
+    //         // res.send(data2);
+    //         console.log(data2);
+    //     }
+    // })
+
 });
 
 //STORE-ALMACEN--JOSUE ROBLES BUSTAMANTE
