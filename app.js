@@ -40,6 +40,6 @@ hbs.registerPartials(partialsPath);
 app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/auth'));
 
-app.listen(5003, () => {
-    console.log("Server Started @ Port 5003");
+app.listen(5004, () => {
+    console.log("Server Started @ Port 5004");
 });

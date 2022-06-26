@@ -199,6 +199,7 @@
                     }, 5000);
                 },
                 error: function(){
+                    console.log("ingrese aqui");
                     alert('Error porfavor verifica que el usuario y dni no exista');
                     $('#action_modal').modal('hide');
                 }
@@ -219,11 +220,11 @@
             $('#action_modal').modal('show');
 
             $.ajax({
-                url: "http://localhost:5003/auth/searchuser",
+                url: "http://localhost:5004/auth/searchuser",
                 method: "POST",
                 data: {
                     usuario: usuario,
-                    action: 'fetch_single'
+                    action: 'add'
                 },
                 dataType: "JSON",
                 success: function(data) {
