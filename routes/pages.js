@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const mysql = require("mysql2");
+//const mysql = require("mysql2");
 const userController = require('../controllers/users');
 const almacen_Controller = require('../controllers/store');
-
+const peopleController = require('../controllers/peopleController');
+const db = require("../databases/mysqlConnection")
+/*
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
@@ -11,14 +13,12 @@ const db = mysql.createConnection({
     password: process.env.DATABASE_PASS,
     database: process.env.DATABASE
 });
-
+*/
 router.get(["/", "/login"], (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
     res.render("login");
 });
 
 router.get("/register", userController.isLoggedIn, (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
     res.render("register");
 
 });
@@ -33,12 +33,9 @@ router.get("/data", userController.isLoggedIn, (req, res) => {
             res.send(data);
         }
     })
-
 });
 
 router.get("/home", userController.isLoggedIn, (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
-    // console.log(req.name);
     if (req.user) {
         res.render("home", { user: req.user });
     } else {
@@ -47,9 +44,6 @@ router.get("/home", userController.isLoggedIn, (req, res) => {
 });
 
 router.get("/home/register", userController.isLoggedIn, (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
-    // res.render("register", { user: req.user });
-    // res.redirect("/login");
     if (req.user) {
         res.render("register", { user: req.user });
     } else {
@@ -58,21 +52,8 @@ router.get("/home/register", userController.isLoggedIn, (req, res) => {
 
 
 });
-router.delete("/deleteuser", userController.deleteuser, (req, res) => {
-    res.render("deleteuser");
-});
 
-
-router.get("/deleteuser", userController.isLoggedIn, (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
-    console.log("PAGES")
-    res.render("searchuser");
-
-});
-
-//revisando
 router.get("/searchuser", userController.isLoggedIn, (req, res) => {
-    // res.send("<h1>Hello Renzo</h1>")
     res.render("searchuser");
 
 });
@@ -83,27 +64,17 @@ router.get("/home/searchuser", userController.isLoggedIn, (req, res) => {
     } else {
         res.redirect("/login");
     }
-
-    // db.query("select dni_persona, apellido_paterno, apellido_materno from personas", (error, results) => {
-    //     if (error) {
-    //         throw error;
-
-    //     } else {
-    //         data2 = JSON.stringify(results);
-    //         // res.send(data2);
-    //         console.log(data2);
-    //     }
-    // })
-
 });
 
 //STORE-ALMACEN--JOSUE ROBLES BUSTAMANTE
 router.get("/busqueda", almacen_Controller.busqueda, (req, res) => {
     res.render("busqueda");
 });
+
 router.post("/addpiece", almacen_Controller.addpiece, (req, res) => {
     res.render("addpiece");
 });
+
 router.get("/home/addpiece", userController.isLoggedIn, (req, res) => {
     if (req.user) {
         res.render("addpiece", { user: req.user });
@@ -111,11 +82,32 @@ router.get("/home/addpiece", userController.isLoggedIn, (req, res) => {
         res.redirect("/login");
     }
 });
+
 router.get("/actualizar", almacen_Controller.actualizar, (req, res) => {
     res.render("actualizar");
 });
+
 router.get("/busqueda_id_piezas", almacen_Controller.busqueda_id_piezas, (req, res) => {
     res.render("busqueda_id_piezas");
 });
+
+/*
+// people - Connection to views
+router.post("/registerPeople", peopleController.registerPeople, (req, res) => {
+    res.render("registerPeople");
+});
+
+router.get("/getPeople", peopleController.getPeople, (req, res) => {
+    res.render("getPeople");
+});
+
+router.get("/updatePeople", peopleController.updatePeople, (req, res) => {
+    res.render("updatePeople");
+});
+
+router.get("/deletePeople", peopleController.dele, (req, res) => {
+    res.render("deletePeople");
+});
+*/
 
 module.exports = router;
