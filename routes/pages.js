@@ -1,19 +1,10 @@
 const express = require("express");
 const router = express.Router();
-//const mysql = require("mysql2");
 const userController = require('../controllers/users');
 const almacen_Controller = require('../controllers/store');
 const peopleController = require('../controllers/peopleController');
 const db = require("../databases/mysqlConnection")
-/*
-const db = mysql.createConnection({
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASS,
-    database: process.env.DATABASE
-});
-*/
+
 router.get(["/", "/login"], (req, res) => {
     res.render("login");
 });
