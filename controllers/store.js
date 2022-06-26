@@ -2,8 +2,8 @@ const mysql = require("mysql2");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
-
-
+const db = require("../databases/mysqlConnection")
+/*
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
@@ -11,7 +11,7 @@ const db = mysql.createConnection({
     password: process.env.DATABASE_PASS,
     database: process.env.DATABASE
 });
-
+*/
 //LA CONSULTA SE REALIZARA POR EL NOMBRE DE LA PIEZA Y TRAERA TODOS LOS REGISTROS QUE COINCIDAN
 exports.busqueda = async(req, res) => {
     try {

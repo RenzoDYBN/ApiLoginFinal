@@ -1,17 +1,17 @@
-const mysql = require("mysql2");
+//const mysql = require("mysql2");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const { setFlagsFromString } = require("v8");
-
-
+const db = require("../databases/mysqlConnection")
+/*
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASS,
     database: process.env.DATABASE
-});
+});*/
 
 exports.login = async(req, res) => {
     try {

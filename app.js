@@ -6,7 +6,8 @@ const hbs = require("hbs");
 // const ejs = require('ejs');
 const cookieParser = require("cookie-parser");
 const app = express();
-
+const db = require("./databases/mysqlConnection.js")
+/*
 doenv.config({
     path: './.env'
 });
@@ -24,7 +25,7 @@ db.connect((err) => {
     } else {
         console.log(`MySQL Connection Success`);
     }
-})
+})*/
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
