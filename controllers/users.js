@@ -206,7 +206,7 @@ exports.deleteuser = (req, res) => {
     var id = req.body.id;
     if (action == 'delete') {     
         console.log("voy a eliminar usuario:" + id)
-        db.query('DELETE FROM usuarios WHERE usuario = ?',[id],(err, rows, fields) => {
+        db.query('UPDATE usuarios SET estado_usuario = ? WHERE usuario = ?', ["Desactivado", id],(err, rows, fields) => {
             if(err) return res.send(err)
               res.send('Se elimino usuario'+ id);
           }); 
