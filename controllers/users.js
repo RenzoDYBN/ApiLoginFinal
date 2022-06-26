@@ -2,6 +2,7 @@ const mysql = require("mysql2");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
+const { setFlagsFromString } = require("v8");
 
 
 const db = mysql.createConnection({
@@ -100,45 +101,46 @@ exports.searchuser = (req, res) => {
         var codigo_rol = req.body.codigo_rol;
         var password = req.body.password;
         var cpassword = req.body.cpassword;
-       // var existe_dni = "no"
-        // var cpass = req.body.cpass;
+        var flag = 1;
+
         console.log(action);
-        
-        //consulta_personas(dni_persona);
-       // console.log(hashedPassword);
-        //SE VALIDA QUE EL DNI NO SE ENCUENTRE REGISTRADO EN LA TABLA USUARIOS
-        db.query("select * from usuarios where dni_persona=?", [dni_persona],
+        //CONSULTA SI EL DNI EXISTE EN LA TABLA PERSONAS
+        db.query("select * from personas where dni_persona=?", [dni_persona],
         async(error, result) => {
             if (error) {
                 confirm.log(error);
             }
-            if (result.length == 0) {  
-                //consulta_personas(dni_persona)
-                //console.log("result.length:"+ result.length);
-                //if(result.length == 0){
-                    if (password == cpassword) {               
-                        let hashedPassword = await bcrypt.hash(password, 8);
-                        console.log(hashedPassword);   
-                        adduser(hashedPassword);   
-                    }else{
-                        console.log("Las contraseñas no coinciden");
-                        return res.render("searchuser", { msg: "Las contraseñas no coinciden", msg_type: "error" })
+            console.log("result length: "+ result.length);
+            if (result.length == 0) {
+                console.log("El DNI NO existe en la tabla PERSONAS add termina");
+                //confirm.log(error);
+                return res.status(400).render("searchuser", {
+                    msg: "Ingresa Tu Usuario y Contraseña",
+                    msg_type: "error",
+                });
+            }else{                  
+                console.log("El DNI existe en la tabla personas");
+                db.query("select * from usuarios where dni_persona=?", [dni_persona],
+                async(error, result) => {
+                   if (error) {
+                      confirm.log(error);
+                   }
+                   if (result.length == 0) {  
+                       if (password == cpassword) {               
+                           let hashedPassword = await bcrypt.hash(password, 8);
+                           console.log(hashedPassword);   
+                           adduser(hashedPassword);   
+                       }else{
+                           console.log("Las contraseñas no coinciden");
+                           return res.render("searchuser", { msg: "Las contraseñas no coinciden", msg_type: "error" })
+                        }      
+                   }else{
+                      console.log("Ya existe usuario con ese DNI");
                     }
-               // }else{
-                //    console.log("EL DNI NO EXISTE EN LA TABLA PERSONAS ELSE");
-                    //return res.render("searchuser", { msg: "EL DNI NO EXISTE EN LA TABLA PERSONAS", msg_type: "error" }) 
-               // }
-                
-            }else{
-                console.log("Ya existe usuario con ese DNI");
-                //return res.render("searchuser", {
-                   // msg: 'El DNI ya esta registrado, intenta con otro DNI',
-                    //msg_type: "error"
-               // });
+                })  
             }
-        }  
-        )
-
+        });  
+    
         function adduser(hashedPassword) {
              //VALIDACION PARA LA CREACION DE EL USUARIO primera letra de primer nombre + primer apellido + primera letra de 2do apellido ( Jose Manuel Perez Ramirez, jperezr)
         db.query('SELECT nombre_persona,apellido_paterno,apellido_materno FROM personas WHERE dni_persona = ?',
@@ -194,28 +196,6 @@ exports.searchuser = (req, res) => {
       
           });
         }
-
-        function consulta_personas(dni_persona){
-            db.query("select * from personas where dni_persona=?", [dni_persona],
-            async(error, result) => {
-                if (error) {
-                    confirm.log(error);
-                }
-                console.log("result length: "+ result.length);
-                if (result.length == 0) {
-                    console.log("El dni no esta registrado en la tabla personas");
-                    return res.render("searchuser", { msg: "Las contraseñas no coinciden", msg_type: "error" })
-                   // return res.render("searchuser");   
-                }else{                  
-                    console.log("El DNI existe en la tabla personas");   
-                    //console.log("flag else: "+ flag);            
-                   // this.existe_dni = "yes"
-                }
-            }  
-            ) 
-        }
-
-
     }
 
 };
