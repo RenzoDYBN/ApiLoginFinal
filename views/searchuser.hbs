@@ -151,7 +151,7 @@
     },        
     {"data": null,
     "render": function (data) {                           
-                return `<button type="button" class="btn btn-warning btn-sm edit" data-id="` + data.usuario + `">Edit</button>&nbsp;<button type="button" class="btn btn-danger btn-sm delete" data-id="` + data.usuario + `">Delete</button>`
+                return `<button type="button" class="btn btn-warning btn-sm edit" data-id="` + data.usuario + `">Editar</button>&nbsp;<button type="button" class="btn btn-danger btn-sm delete" data-id="` + data.usuario + `">Eliminar</button>`
                 }
         }
     ],
@@ -241,22 +241,31 @@
         $(document).on('click', '.delete', function() {
 
             var id = $(this).data('id');
+            //var dni_persona = $(this).data('dni_persona');
+            //var estado_usuario = $(this).data('estado_usuario');
+            //var usuario = $(this).data('usuario');
+             console.log("id: " + id)
+             //console.log("Estado usuario: " + estado_usuario)
+             //console.log("usuario: " + usuario)
 
-            if (confirm("Are you sure you want to delete this data?")) {
+            if (confirm("¿Estas seguro de eliminar este usuario?")) {
+                 console.log("INGRESE AQUI HBS")
                 $.ajax({
-                    url: "http://localhost:3000/sample_data/action",
-                    method: "POST",
+                    url: "http://localhost:5004/deleteuser",
+                    method: "DELETE",
                     data: {
                         action: 'delete',
-                        id: id
+                        id: id 
                     },
                     dataType: "JSON",
                     success: function(data) {
+                         /*
                         $('#message').html('<div class="alert alert-success">' + data.message + '</div>');
                         load_data();
                         setTimeout(function() {
                             $('#message').html('');
                         }, 5000);
+                        */
                     }
                 });
             }

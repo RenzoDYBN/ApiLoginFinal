@@ -58,6 +58,17 @@ router.get("/home/register", userController.isLoggedIn, (req, res) => {
 
 
 });
+router.delete("/deleteuser", userController.deleteuser, (req, res) => {
+    res.render("deleteuser");
+});
+
+
+router.get("/deleteuser", userController.isLoggedIn, (req, res) => {
+    // res.send("<h1>Hello Renzo</h1>")
+    console.log("PAGES")
+    res.render("searchuser");
+
+});
 
 //revisando
 router.get("/searchuser", userController.isLoggedIn, (req, res) => {

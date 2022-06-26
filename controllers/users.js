@@ -200,75 +200,18 @@ exports.searchuser = (req, res) => {
 
 };
 
-
-exports.searchuser_renzo = (req, res) => {
+exports.deleteuser = (req, res) => {
+    console.log("INGRESE AQUI")
     var action = req.body.action;
-
-
-    if (action == 'Add') {
-
-        var dni_persona = req.body.dni_persona;
-        var codigo_rol = req.body.codigo_rol;
-        var nombre_usuario = req.body.nombre_usuario;
-        var password = req.body.password;
-        var cpassword = req.body.cpassword;
-
-        console.log(action);
-        db.query("select dni_persona from usuarios where dni_persona=?", [dni_persona],
-            async(error, result) => {
-                // console.log(result);
-                if (error) {
-                    confirm.log(error);
-                }
-                if (result.length > 0) {
-                    return res.render("searchuser", {
-                        msg: 'El Dni ya esta registrado , intenta con otro Usuario',
-                        msg_type: "error"
-                    });
-                } else if (password !== cpassword) {
-                    return res.render("searchuser", { msg: "Las contraseñas no coinciden", msg_type: "error" })
-                }
-                let hashedPassord = await bcrypt.hash(password, 8);
-                console.log(hashedPassord);
-                //VALIDACION PARA LA CREACION DE EL USUARIO primera letra de primer nombre + primer apellido + primera letra de 2do apellido ( Jose Manuel Perez Ramirez, jperezr)
-                db.query('SELECT nombre_persona,apellido_paterno,apellido_materno FROM personas WHERE dni_persona = ?', [dni_persona], (err, results, fields) => {
-                    if (!err) {
-                        data1 = JSON.stringify(results[0].nombre_persona);
-                        data2 = JSON.stringify(results[0].apellido_paterno);
-                        data3 = JSON.stringify(results[0].apellido_materno);
-
-                        let result1 = data1.substring(2, 1);
-                        const result2 = data2.slice(1, -1)
-                        console.log('apellido_paterno recortado:' + result2);
-                        let result3 = data3.substring(2, 1);
-
-                        const nombre_usuario_mayusculas = result1.concat(result2, result3);
-                        var nombre_usuario = nombre_usuario_mayusculas.toLowerCase();
-                        console.log('USUARIO A CREAR:' + nombre_usuario);
-
-                        //INSERTAMOS AL NUEVO USUARIO
-                        var query = `
-                        INSERT INTO usuarios 
-                        (dni_persona, codigo_rol, nombre_usuario, pass, estado_usuario) 
-                        VALUES ("${dni_persona}", "${Number(codigo_rol)}", "${nombre_usuario}", "${hashedPassord}", "Activo")
-                        `;
-                        db.query(query, function(error, data) {
-                            // console.log(action);
-                            res.json({
-                                message: 'Data Added'
-                            });
-                        });
-                    } else {
-                        console.log(err);
-                    }
-
-                });
-
-            }
-        );
-
+    var id = req.body.id;
+    if (action == 'delete') {     
+        console.log("voy a eliminar usuario:" + id)
+        db.query('DELETE FROM usuarios WHERE usuario = ?',[id],(err, rows, fields) => {
+            if(err) return res.send(err)
+              res.send('Se elimino usuario'+ id);
+          }); 
     }
-};
+}
 
 
 exports.isLoggedIn = async(req, res, next) => {
