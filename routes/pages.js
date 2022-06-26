@@ -53,6 +53,19 @@ router.get("/home/register", userController.isLoggedIn, (req, res) => {
 
 });
 
+router.delete("/deleteuser", userController.deleteuser, (req, res) => {
+    res.render("searchuser");
+
+});
+router.get("/home/deleteuser", userController.isLoggedIn, (req, res) => {
+    if (req.user) {
+        res.render("searchuser", { user: req.user });
+    } else {
+        res.redirect("/login");
+    }
+});
+
+
 router.get("/searchuser", userController.isLoggedIn, (req, res) => {
     res.render("searchuser");
 
